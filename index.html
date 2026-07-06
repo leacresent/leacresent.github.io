@@ -67,114 +67,6 @@
         font-weight: 400;
       }
 
-      /* ---------- sealed cover: scroll or tap to open the letter ---------- */
-
-      body.sealed {
-        overflow: hidden;
-        height: 100vh;
-      }
-
-      .cover {
-        position: fixed;
-        inset: 0;
-        z-index: 60;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 42px;
-        perspective: 700px;
-        background: radial-gradient(circle at 50% 34%, #5a514a 0%, #3d3630 74%);
-        transition: transform 1050ms cubic-bezier(0.6, 0, 0.2, 1) 340ms, opacity 780ms ease 420ms;
-      }
-
-      body.opened .cover {
-        transform: translateY(-100%);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .cover-band {
-        color: var(--cream);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 22px;
-        letter-spacing: 5px;
-      }
-
-      .cover-env {
-        position: relative;
-        width: min(64vw, 230px);
-        height: 150px;
-        background: var(--paper);
-        box-shadow: 0 26px 64px rgba(0, 0, 0, 0.42);
-        transform-style: preserve-3d;
-      }
-
-      .cover-flap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        z-index: 2;
-        background: linear-gradient(158deg, #574e47 0%, #423b35 100%);
-        clip-path: polygon(0 0, 100% 0, 50% 74%);
-        transform-origin: top center;
-        transition: transform 860ms cubic-bezier(0.5, 0, 0.2, 1);
-        backface-visibility: hidden;
-      }
-
-      body.opened .cover-flap {
-        transform: rotateX(-178deg);
-      }
-
-      .cover-seal {
-        position: absolute;
-        top: 42%;
-        left: 50%;
-        z-index: 3;
-        width: 54px;
-        height: 54px;
-        display: grid;
-        place-items: center;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: var(--brown);
-        color: var(--cream);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 600;
-        font-size: 15px;
-        letter-spacing: 1px;
-        transition: opacity 260ms ease;
-      }
-
-      body.opened .cover-seal {
-        opacity: 0;
-      }
-
-      .cover-hint {
-        display: grid;
-        gap: 8px;
-        color: rgba(246, 238, 229, 0.85);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-size: 17px;
-        text-align: center;
-        animation: hintPulse 1900ms ease-in-out infinite;
-      }
-
-      body.opened .cover-hint {
-        opacity: 0;
-      }
-
-      @keyframes hintPulse {
-        0%, 100% { transform: translateY(0); opacity: 0.6; }
-        50% { transform: translateY(6px); opacity: 1; }
-      }
-
       /* ---------- brown frame (top band + side bars + envelope V move as one group) ---------- */
 
       /* --q (0..1) is set from scroll: 0 = framed, 1 = frame slid away.
@@ -341,11 +233,10 @@
       .page {
         position: relative;
         z-index: 1;
+        animation: letterRise 1100ms cubic-bezier(0.18, 0.9, 0.18, 1) both;
       }
 
-      body.opened .page {
-        animation: letterRise 1100ms cubic-bezier(0.18, 0.9, 0.18, 1) 200ms both;
-      }
+
 
       @keyframes letterRise {
         0% { transform: translateY(56vh); filter: blur(1.4px); }
@@ -380,8 +271,31 @@
       /* ---------- intro ---------- */
 
       .intro {
-        padding-top: 60px;
-        padding-bottom: 96px;
+        padding-top: 0;
+        padding-bottom: 34px;
+      }
+
+      /* first screen: title + tall polaroid + names only; venue/date reveal on scroll */
+      .intro-hero {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 58px 0 268px;
+      }
+
+      .intro-hero .polaroid {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        width: min(282px, 82%);
+        margin: 0 auto 32px;
+      }
+
+      .intro-hero .polaroid .photo {
+        flex: 1;
+        aspect-ratio: auto;
+        min-height: 205px;
       }
 
       .intro .star,
@@ -393,16 +307,6 @@
       .intro .venue-line,
       .intro .paragraph {
         opacity: 0;
-      }
-
-      body.opened .intro .star,
-      body.opened .intro .title-small,
-      body.opened .intro .title-script,
-      body.opened .intro .polaroid,
-      body.opened .intro .headline,
-      body.opened .intro .date-line,
-      body.opened .intro .venue-line,
-      body.opened .intro .paragraph {
         animation: softAppear 850ms ease both;
       }
 
@@ -497,7 +401,7 @@
       }
 
       .venue-line {
-        margin: 18px 0 0;
+        margin: 46px 0 0;
         font-family: "EB Garamond", serif;
         font-style: italic;
         font-weight: 700;
@@ -548,43 +452,6 @@
         -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
       }
 
-      .party-title {
-        margin: 0;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 42px;
-        line-height: 1.06;
-      }
-
-      .party-title .script {
-        display: block;
-        margin-top: 12px;
-        font-size: 50px;
-        font-weight: 400;
-        line-height: 1;
-      }
-
-      .party-venue {
-        margin: 46px 0 0;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 30px;
-        letter-spacing: 1px;
-        color: #201913;
-      }
-
-      .small-date {
-        margin: 8px 0 0;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 600;
-        font-size: 24px;
-        letter-spacing: 0.5px;
-        color: #332119;
-      }
-
       .parents {
         display: grid;
         gap: 22px;
@@ -630,8 +497,9 @@
       }
 
       .gallery-grid {
-        columns: 2;
-        column-gap: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
         width: 100%;
         margin: 0 auto;
       }
@@ -641,10 +509,9 @@
       .gallery-grid img {
         display: block;
         width: 100%;
-        margin-bottom: 12px;
+        aspect-ratio: 3 / 4;
         object-fit: cover;
-        break-inside: avoid;
-        filter: grayscale(1) contrast(0.92);
+        filter: saturate(0.72) contrast(0.96);
       }
 
       .gallery-grid img[hidden] { display: none; }
@@ -996,18 +863,6 @@
     </style>
   </head>
   <body>
-    <div class="cover" id="cover">
-      <div class="cover-band">INVITED</div>
-      <div class="cover-env">
-        <div class="cover-flap"></div>
-        <div class="cover-seal">0109</div>
-      </div>
-      <div class="cover-hint">
-        <span>Sunhong &hearts; Yujung</span>
-        <span>스크롤하여 열어보세요 ⌄</span>
-      </div>
-    </div>
-
     <div class="frame" id="frame" aria-hidden="true">
       <div class="top-band">INVITED</div>
       <div class="side-frame"></div>
@@ -1023,22 +878,25 @@
     <main class="wrap">
       <div class="page">
         <section class="intro">
-          <div class="star" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 0 L13.4 10.6 L24 12 L13.4 13.4 L12 24 L10.6 13.4 L0 12 L10.6 10.6 Z"/>
-              <path d="M12 4 L12.9 11.1 L20 12 L12.9 12.9 L12 20 L11.1 12.9 L4 12 L11.1 11.1 Z" transform="rotate(45 12 12)"/>
-            </svg>
-          </div>
-          <h1 class="title-script script">We Invite You</h1>
-
-          <div class="polaroid">
-            <div class="photo">
-              <img src="assets/main.jpg" alt="신랑 신부"
-                   onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80'">
+          <div class="intro-hero">
+            <div class="star" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 0 L13.4 10.6 L24 12 L13.4 13.4 L12 24 L10.6 13.4 L0 12 L10.6 10.6 Z"/>
+                <path d="M12 4 L12.9 11.1 L20 12 L12.9 12.9 L12 20 L11.1 12.9 L4 12 L11.1 11.1 Z" transform="rotate(45 12 12)"/>
+              </svg>
             </div>
+            <h1 class="title-script script">We Invite You</h1>
+
+            <div class="polaroid">
+              <div class="photo">
+                <img src="assets/main.jpg" alt="신랑 신부"
+                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80'">
+              </div>
+            </div>
+
+            <h2 class="headline">SUNHONG &#9829; YUJUNG</h2>
           </div>
 
-          <h2 class="headline">SUNHONG &#9829; YUJUNG</h2>
           <div class="venue-line">SONO FELICE</div>
           <div class="date-line">2027.01.09 PM 1:00</div>
           <p class="paragraph">
@@ -1060,9 +918,6 @@
           <div class="party-photo soft-photo block">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=80" alt="wedding couple walking">
           </div>
-          <h2 class="party-title">OUR,<br>WEDDING <span class="script">Party</span></h2>
-          <div class="party-venue">SONO FELICE</div>
-          <div class="small-date">2027.01.09 PM 1:00</div>
           <div class="parents">
             <div>김연중 · 서미경의 아들 <b>선홍</b></div>
             <div>김사일 · 김혜경의 딸 <b>유정</b></div>
@@ -1076,18 +931,18 @@
             <button type="button" data-g="photo">Wedding Photo</button>
           </div>
           <div class="gallery-grid" data-g="story">
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80" alt="wedding detail">
-            <img style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1509610973147-232dfea52a97?auto=format&fit=crop&w=700&q=80" alt="couple in a car">
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="couple walking">
-            <img class="more" hidden style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="couple in a garden">
-            <img class="more" hidden style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
+            <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80" alt="wedding detail">
+            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
+            <img src="https://images.unsplash.com/photo-1509610973147-232dfea52a97?auto=format&fit=crop&w=700&q=80" alt="couple in a car">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="couple walking">
+            <img class="more" hidden src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="couple in a garden">
+            <img class="more" hidden src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
           </div>
           <div class="gallery-grid" data-g="photo" hidden>
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="wedding photo">
-            <img style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="garden couple">
-            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="wedding photo">
+            <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
+            <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="garden couple">
+            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
           </div>
           <button type="button" class="view-more">view more</button>
           <div class="handwrite">It was not only a moment we shared,<br>but a love held forever.</div>
@@ -1233,24 +1088,6 @@
     </main>
 
     <script>
-      // sealed cover: first scroll / tap / key opens the letter
-      document.body.classList.add("sealed");
-      let opened = false;
-      function openLetter() {
-        if (opened) return;
-        opened = true;
-        document.body.classList.remove("sealed");
-        document.body.classList.add("opened");
-        window.scrollTo(0, 0);
-        setTimeout(() => {
-          const cover = document.getElementById("cover");
-          if (cover) cover.remove();
-        }, 1600);
-      }
-      ["wheel", "touchmove", "keydown"].forEach((ev) =>
-        window.addEventListener(ev, openLetter, { passive: true, once: false }));
-      document.getElementById("cover").addEventListener("click", openLetter);
-
       // section reveal on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
