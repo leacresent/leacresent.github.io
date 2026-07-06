@@ -67,6 +67,114 @@
         font-weight: 400;
       }
 
+      /* ---------- sealed cover: scroll or tap to open the letter ---------- */
+
+      body.sealed {
+        overflow: hidden;
+        height: 100vh;
+      }
+
+      .cover {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 42px;
+        perspective: 700px;
+        background: radial-gradient(circle at 50% 34%, #5a514a 0%, #3d3630 74%);
+        transition: transform 1050ms cubic-bezier(0.6, 0, 0.2, 1) 340ms, opacity 780ms ease 420ms;
+      }
+
+      body.opened .cover {
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .cover-band {
+        color: var(--cream);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 5px;
+      }
+
+      .cover-env {
+        position: relative;
+        width: min(64vw, 230px);
+        height: 150px;
+        background: var(--paper);
+        box-shadow: 0 26px 64px rgba(0, 0, 0, 0.42);
+        transform-style: preserve-3d;
+      }
+
+      .cover-flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        z-index: 2;
+        background: linear-gradient(158deg, #574e47 0%, #423b35 100%);
+        clip-path: polygon(0 0, 100% 0, 50% 74%);
+        transform-origin: top center;
+        transition: transform 860ms cubic-bezier(0.5, 0, 0.2, 1);
+        backface-visibility: hidden;
+      }
+
+      body.opened .cover-flap {
+        transform: rotateX(-178deg);
+      }
+
+      .cover-seal {
+        position: absolute;
+        top: 42%;
+        left: 50%;
+        z-index: 3;
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: var(--brown);
+        color: var(--cream);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 1px;
+        transition: opacity 260ms ease;
+      }
+
+      body.opened .cover-seal {
+        opacity: 0;
+      }
+
+      .cover-hint {
+        display: grid;
+        gap: 8px;
+        color: rgba(246, 238, 229, 0.85);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 17px;
+        text-align: center;
+        animation: hintPulse 1900ms ease-in-out infinite;
+      }
+
+      body.opened .cover-hint {
+        opacity: 0;
+      }
+
+      @keyframes hintPulse {
+        0%, 100% { transform: translateY(0); opacity: 0.6; }
+        50% { transform: translateY(6px); opacity: 1; }
+      }
+
       /* ---------- brown frame (top band + side bars + envelope V move as one group) ---------- */
 
       /* --q (0..1) is set from scroll: 0 = framed, 1 = frame slid away.
@@ -233,7 +341,10 @@
       .page {
         position: relative;
         z-index: 1;
-        animation: letterRise 1100ms cubic-bezier(0.18, 0.9, 0.18, 1) both;
+      }
+
+      body.opened .page {
+        animation: letterRise 1100ms cubic-bezier(0.18, 0.9, 0.18, 1) 200ms both;
       }
 
       @keyframes letterRise {
@@ -282,6 +393,16 @@
       .intro .venue-line,
       .intro .paragraph {
         opacity: 0;
+      }
+
+      body.opened .intro .star,
+      body.opened .intro .title-small,
+      body.opened .intro .title-script,
+      body.opened .intro .polaroid,
+      body.opened .intro .headline,
+      body.opened .intro .date-line,
+      body.opened .intro .venue-line,
+      body.opened .intro .paragraph {
         animation: softAppear 850ms ease both;
       }
 
@@ -483,16 +604,62 @@
 
       /* ---------- gallery ---------- */
 
-      .gallery {
-        display: grid;
-        gap: 14px;
-        width: min(300px, 100%);
-        margin: 40px auto 30px;
+      .gallery-tabs {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin: 34px auto 16px;
+        border-bottom: 1px solid var(--line);
       }
 
-      .gallery img {
-        aspect-ratio: 1.55;
+      .gallery-tabs button {
+        padding: 0 2px 12px;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        background: none;
+        color: #9a948c;
+        font-family: inherit;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .gallery-tabs button.active {
+        border-bottom-color: var(--brown);
+        color: #33302e;
+      }
+
+      .gallery-grid {
+        columns: 2;
+        column-gap: 12px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .gallery-grid[hidden] { display: none; }
+
+      .gallery-grid img {
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
+        object-fit: cover;
+        break-inside: avoid;
         filter: grayscale(1) contrast(0.92);
+      }
+
+      .gallery-grid img[hidden] { display: none; }
+
+      .view-more {
+        width: 100%;
+        margin-top: 6px;
+        padding: 16px 0;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.55);
+        color: #57504a;
+        font-family: inherit;
+        font-size: 16px;
+        cursor: pointer;
       }
 
       .handwrite {
@@ -829,6 +996,18 @@
     </style>
   </head>
   <body>
+    <div class="cover" id="cover">
+      <div class="cover-band">INVITED</div>
+      <div class="cover-env">
+        <div class="cover-flap"></div>
+        <div class="cover-seal">0109</div>
+      </div>
+      <div class="cover-hint">
+        <span>Sunhong &hearts; Yujung</span>
+        <span>스크롤하여 열어보세요 ⌄</span>
+      </div>
+    </div>
+
     <div class="frame" id="frame" aria-hidden="true">
       <div class="top-band">INVITED</div>
       <div class="side-frame"></div>
@@ -850,8 +1029,7 @@
               <path d="M12 4 L12.9 11.1 L20 12 L12.9 12.9 L12 20 L11.1 12.9 L4 12 L11.1 11.1 Z" transform="rotate(45 12 12)"/>
             </svg>
           </div>
-          <h1 class="title-small">WITH LOVE</h1>
-          <div class="title-script script">B&eacute;n&eacute;diction</div>
+          <h1 class="title-script script">We Invite You</h1>
 
           <div class="polaroid">
             <div class="photo">
@@ -893,11 +1071,25 @@
 
         <section class="reveal">
           <h2 class="title-small">WEDDING GALLERY</h2>
-          <div class="gallery">
-            <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=80" alt="wedding detail">
-            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80" alt="bride and groom">
-            <img src="https://images.unsplash.com/photo-1509610973147-232dfea52a97?auto=format&fit=crop&w=900&q=80" alt="couple in a car">
+          <div class="gallery-tabs">
+            <button type="button" class="active" data-g="story">Our Story</button>
+            <button type="button" data-g="photo">Wedding Photo</button>
           </div>
+          <div class="gallery-grid" data-g="story">
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80" alt="wedding detail">
+            <img style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1509610973147-232dfea52a97?auto=format&fit=crop&w=700&q=80" alt="couple in a car">
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="couple walking">
+            <img class="more" hidden style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="couple in a garden">
+            <img class="more" hidden style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
+          </div>
+          <div class="gallery-grid" data-g="photo" hidden>
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="wedding photo">
+            <img style="aspect-ratio:4/3" src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=700&q=80" alt="wedding car">
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=700&q=80" alt="garden couple">
+            <img style="aspect-ratio:3/4" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="bride and groom">
+          </div>
+          <button type="button" class="view-more">view more</button>
           <div class="handwrite">It was not only a moment we shared,<br>but a love held forever.</div>
         </section>
 
@@ -1041,6 +1233,24 @@
     </main>
 
     <script>
+      // sealed cover: first scroll / tap / key opens the letter
+      document.body.classList.add("sealed");
+      let opened = false;
+      function openLetter() {
+        if (opened) return;
+        opened = true;
+        document.body.classList.remove("sealed");
+        document.body.classList.add("opened");
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+          const cover = document.getElementById("cover");
+          if (cover) cover.remove();
+        }, 1600);
+      }
+      ["wheel", "touchmove", "keydown"].forEach((ev) =>
+        window.addEventListener(ev, openLetter, { passive: true, once: false }));
+      document.getElementById("cover").addEventListener("click", openLetter);
+
       // section reveal on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -1048,6 +1258,22 @@
         });
       }, { threshold: 0.15 });
       document.querySelectorAll(".reveal").forEach((s) => observer.observe(s));
+
+      // gallery: tab switch + view more
+      const gTabs = document.querySelectorAll(".gallery-tabs button");
+      gTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          gTabs.forEach((t) => t.classList.toggle("active", t === tab));
+          document.querySelectorAll(".gallery-grid").forEach((g) => {
+            g.hidden = g.dataset.g !== tab.dataset.g;
+          });
+        });
+      });
+      const viewMore = document.querySelector(".view-more");
+      viewMore.addEventListener("click", () => {
+        document.querySelectorAll(".gallery-grid img.more").forEach((img) => { img.hidden = false; });
+        viewMore.hidden = true;
+      });
 
       // Two separate motions, both opaque:
       //  --q  : top band + side bars swoosh away quickly the moment you scroll
