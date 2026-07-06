@@ -8,8 +8,8 @@
       @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Gowun+Dodum&family=Noto+Serif+KR:wght@400;500;700&family=Parisienne&display=swap");
 
       :root {
-        --brown: #2b160f;
-        --brown-soft: #3a2115;
+        --brown: #4b423c;
+        --brown-soft: #5a514a;
         --paper: #f7f5ee;
         --cream: #f6ede4;
         --ink: #2b211d;
@@ -106,12 +106,25 @@
         position: fixed;
         bottom: 0;
         left: 50%;
-        transform: translateX(-50%);
         z-index: 37;
         width: min(100%, var(--card));
         height: 262px;
         pointer-events: none;
-        animation: envelopeIn 1250ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        transition: transform 820ms cubic-bezier(0.22, 1, 0.36, 1), opacity 600ms ease;
+      }
+
+      /* pre-load: tucked below */
+      .envelope-fixed.enter {
+        transform: translateX(-50%) translateY(120px);
+        opacity: 0;
+      }
+
+      /* scrolled past the intro: slide the V away */
+      .envelope-fixed.gone {
+        transform: translateX(-50%) translateY(100%);
+        opacity: 0;
       }
 
       .env-v {
@@ -183,11 +196,6 @@
         font-size: 14px;
         line-height: 1.7;
         text-align: center;
-      }
-
-      @keyframes envelopeIn {
-        from { transform: translateX(-50%) translateY(110px); }
-        to { transform: translateX(-50%) translateY(0); }
       }
 
       /* ---------- the letter ---------- */
@@ -761,7 +769,7 @@
         cursor: pointer;
       }
 
-      .final-section { padding-bottom: 316px; }
+      .final-section { padding-bottom: 96px; }
 
       @media (prefers-reduced-motion: reduce) {
         .page,
@@ -993,7 +1001,7 @@
       </div>
     </main>
 
-    <div class="envelope-fixed" aria-hidden="true">
+    <div class="envelope-fixed enter" id="envelope" aria-hidden="true">
       <div class="env-v"></div>
       <div class="env-base"></div>
       <div class="env-bump"></div>
@@ -1009,6 +1017,18 @@
         });
       }, { threshold: 0.15 });
       document.querySelectorAll(".reveal").forEach((s) => observer.observe(s));
+
+      // envelope: slide up on load, slide the V away after the first screen
+      const envelope = document.getElementById("envelope");
+      requestAnimationFrame(() => setTimeout(() => envelope.classList.remove("enter"), 150));
+      let envTick = false;
+      function updateEnvelope() {
+        envTick = false;
+        envelope.classList.toggle("gone", window.scrollY > window.innerHeight * 0.55);
+      }
+      window.addEventListener("scroll", () => {
+        if (!envTick) { envTick = true; requestAnimationFrame(updateEnvelope); }
+      }, { passive: true });
 
       // D-day countdown to 2027-01-09
       const weddingDay = new Date(2027, 0, 9);
