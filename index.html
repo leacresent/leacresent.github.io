@@ -16,6 +16,7 @@
         --muted: #77716c;
         --card: 430px;
         --frame: 28px;
+        --pad: 12px;
       }
 
       * {
@@ -31,11 +32,6 @@
         color: var(--ink);
         background: #edeae2;
         font-family: "Gowun Dodum", "Noto Serif KR", serif;
-      }
-
-      body.sealed {
-        overflow: hidden;
-        height: 100vh;
       }
 
       body::before {
@@ -60,118 +56,6 @@
       .script {
         font-family: "Parisienne", cursive;
         font-weight: 400;
-      }
-
-      /* ---------- opening cover (scroll to unwrap) ---------- */
-
-      .cover {
-        position: fixed;
-        inset: 0;
-        z-index: 60;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-        perspective: 700px;
-        background: radial-gradient(circle at 50% 32%, #3c2317 0%, #24120c 72%);
-        transition: transform 1150ms cubic-bezier(0.6, 0, 0.2, 1) 380ms, opacity 820ms ease 460ms;
-      }
-
-      body.opened .cover {
-        transform: translateY(-100%);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .cover-band {
-        color: var(--cream);
-        font-family: "Cormorant Garamond", serif;
-        font-style: italic;
-        font-weight: 600;
-        font-size: 21px;
-        letter-spacing: 5px;
-      }
-
-      .cover-env {
-        position: relative;
-        width: min(64vw, 224px);
-        height: 148px;
-        background: var(--cream);
-        box-shadow: 0 26px 64px rgba(0, 0, 0, 0.5);
-        transform-style: preserve-3d;
-      }
-
-      .cover-env::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        opacity: 0.3;
-        background-image:
-          repeating-linear-gradient(14deg, rgba(0, 0, 0, 0.03) 0 1px, transparent 1px 8px);
-      }
-
-      .cover-flap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        z-index: 2;
-        background: linear-gradient(158deg, #3b251a 0%, #24120c 100%);
-        clip-path: polygon(0 0, 100% 0, 50% 74%);
-        transform-origin: top center;
-        transition: transform 880ms cubic-bezier(0.5, 0, 0.2, 1);
-        backface-visibility: hidden;
-      }
-
-      body.opened .cover-flap {
-        transform: rotateX(-178deg);
-      }
-
-      .cover-seal {
-        position: absolute;
-        top: 42%;
-        left: 50%;
-        z-index: 3;
-        width: 52px;
-        height: 52px;
-        display: grid;
-        place-items: center;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: var(--brown);
-        color: var(--cream);
-        font-family: "Cormorant Garamond", serif;
-        font-style: italic;
-        font-weight: 600;
-        font-size: 16px;
-        letter-spacing: 1px;
-        transition: opacity 260ms ease;
-      }
-
-      body.opened .cover-seal {
-        opacity: 0;
-      }
-
-      .cover-hint {
-        display: grid;
-        gap: 6px;
-        color: rgba(246, 238, 229, 0.72);
-        font-family: "Cormorant Garamond", serif;
-        font-style: italic;
-        font-size: 15px;
-        text-align: center;
-        animation: hintPulse 1900ms ease-in-out infinite;
-      }
-
-      body.opened .cover-hint {
-        opacity: 0;
-      }
-
-      @keyframes hintPulse {
-        0%, 100% { transform: translateY(0); opacity: 0.55; }
-        50% { transform: translateY(6px); opacity: 0.95; }
       }
 
       /* ---------- fixed chrome ---------- */
@@ -227,10 +111,7 @@
         width: min(100%, var(--card));
         height: 262px;
         pointer-events: none;
-      }
-
-      body.opened .envelope-fixed {
-        animation: envelopeIn 1250ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+        animation: envelopeIn 1250ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
       }
 
       .env-v {
@@ -292,10 +173,10 @@
 
       .env-quote {
         position: absolute;
-        left: 42px;
-        right: 42px;
-        bottom: 32px;
-        color: rgba(246, 237, 228, 0.9);
+        left: calc(var(--frame) + 12px);
+        right: calc(var(--frame) + 12px);
+        bottom: 30px;
+        color: #ffffff;
         font-family: "Cormorant Garamond", serif;
         font-style: italic;
         font-weight: 500;
@@ -307,25 +188,6 @@
       @keyframes envelopeIn {
         from { transform: translateX(-50%) translateY(110px); }
         to { transform: translateX(-50%) translateY(0); }
-      }
-
-      .music {
-        position: fixed;
-        right: max(16px, calc((100vw - var(--card)) / 2 + 16px));
-        bottom: 26px;
-        z-index: 45;
-        width: 58px;
-        height: 58px;
-        border: 0;
-        border-radius: 999px;
-        display: grid;
-        place-items: center;
-        color: var(--cream);
-        background: rgba(43, 22, 15, 0.9);
-        box-shadow: 0 10px 26px rgba(43, 22, 15, 0.24);
-        font-size: 28px;
-        line-height: 1;
-        cursor: pointer;
       }
 
       /* ---------- the letter ---------- */
@@ -355,21 +217,18 @@
       .page {
         position: relative;
         z-index: 1;
-      }
-
-      body.opened .page {
-        animation: letterRise 1750ms cubic-bezier(0.18, 0.9, 0.18, 1) 360ms both;
+        animation: letterRise 1500ms cubic-bezier(0.18, 0.9, 0.18, 1) 150ms both;
       }
 
       @keyframes letterRise {
-        0% { transform: translateY(58vh); filter: blur(1.5px); }
+        0% { transform: translateY(56vh); filter: blur(1.4px); }
         74% { transform: translateY(-12px); filter: blur(0); }
         100% { transform: translateY(0); }
       }
 
       section {
         position: relative;
-        padding: 82px calc(var(--frame) + 14px) 120px;
+        padding: 74px calc(var(--frame) + var(--pad)) 88px;
         text-align: center;
       }
 
@@ -384,11 +243,18 @@
         transform: translateY(0);
       }
 
+      /* every full-width block stays inside the frame bars */
+      .block {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       /* ---------- intro ---------- */
 
       .intro {
-        padding-top: 68px;
-        padding-bottom: 200px;
+        padding-top: 66px;
+        padding-bottom: 196px;
       }
 
       .intro .star,
@@ -400,27 +266,17 @@
       .intro .sub-script,
       .intro .paragraph {
         opacity: 0;
-      }
-
-      body.opened .intro .star,
-      body.opened .intro .title-small,
-      body.opened .intro .title-script,
-      body.opened .intro .polaroid,
-      body.opened .intro .headline,
-      body.opened .intro .date-line,
-      body.opened .intro .sub-script,
-      body.opened .intro .paragraph {
         animation: softAppear 850ms ease both;
       }
 
-      body.opened .intro .star { animation-delay: 1450ms; }
-      body.opened .intro .title-small { animation-delay: 1560ms; }
-      body.opened .intro .title-script { animation-delay: 1680ms; }
-      body.opened .intro .polaroid { animation-delay: 1850ms; }
-      body.opened .intro .headline { animation-delay: 2020ms; }
-      body.opened .intro .date-line { animation-delay: 2140ms; }
-      body.opened .intro .sub-script { animation-delay: 2280ms; }
-      body.opened .intro .paragraph { animation-delay: 2420ms; }
+      .intro .star { animation-delay: 900ms; }
+      .intro .title-small { animation-delay: 1000ms; }
+      .intro .title-script { animation-delay: 1110ms; }
+      .intro .polaroid { animation-delay: 1260ms; }
+      .intro .headline { animation-delay: 1420ms; }
+      .intro .date-line { animation-delay: 1540ms; }
+      .intro .sub-script { animation-delay: 1680ms; }
+      .intro .paragraph { animation-delay: 1820ms; }
 
       @keyframes softAppear {
         from { opacity: 0; transform: translateY(20px); }
@@ -459,15 +315,15 @@
       }
 
       .polaroid {
-        width: min(270px, 76vw);
-        margin: 0 auto 48px;
-        padding: 18px 18px 22px;
+        width: min(268px, 82%);
+        margin: 0 auto 44px;
+        padding: 16px 16px 18px;
         background: #fff;
         box-shadow: 0 10px 28px rgba(43, 22, 15, 0.14);
       }
 
       .polaroid .photo {
-        aspect-ratio: 1;
+        aspect-ratio: 1 / 1;
         overflow: hidden;
         background: linear-gradient(135deg, #cdbfae, #9c8a76);
         filter: saturate(0.9) contrast(0.97);
@@ -485,7 +341,7 @@
       }
 
       .polaroid-caption {
-        margin-top: 34px;
+        margin-top: 22px;
         color: #38241c;
         font-size: 21px;
         font-weight: 700;
@@ -494,7 +350,7 @@
 
       .headline {
         margin: 0;
-        font-size: clamp(28px, 7vw, 36px);
+        font-size: clamp(27px, 6.6vw, 34px);
         font-weight: 400;
         letter-spacing: 1px;
         line-height: 1.35;
@@ -503,24 +359,24 @@
 
       .date-line {
         margin: 12px 0 0;
-        font-size: clamp(26px, 6.6vw, 33px);
+        font-size: clamp(25px, 6.2vw, 31px);
         font-weight: 400;
         letter-spacing: 0.5px;
         color: #332119;
       }
 
       .sub-script {
-        margin: 74px 0 42px;
+        margin: 70px 0 40px;
         color: #38241c;
         font-size: 33px;
         line-height: 1;
       }
 
       .paragraph {
-        width: min(390px, 100%);
+        width: min(360px, 100%);
         margin: 0 auto;
         color: #77716c;
-        font-size: 18px;
+        font-size: 17px;
         line-height: 2;
         word-break: keep-all;
       }
@@ -528,13 +384,13 @@
       /* ---------- celebrate ---------- */
 
       .party-photo {
-        width: min(360px, 86vw);
+        width: 100%;
         height: 120px;
-        margin: 40px auto 52px;
+        margin: 40px auto 50px;
         overflow: hidden;
         filter: saturate(0.72);
-        mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-        -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
       }
 
       .party-title {
@@ -542,21 +398,21 @@
         font-family: "Cormorant Garamond", serif;
         font-style: italic;
         font-weight: 700;
-        font-size: 44px;
+        font-size: 42px;
         line-height: 1.06;
       }
 
       .party-title .script {
         display: block;
         margin-top: 12px;
-        font-size: 52px;
+        font-size: 50px;
         font-weight: 400;
         line-height: 1;
       }
 
       .small-date {
-        margin: 50px 0 0;
-        font-size: 23px;
+        margin: 48px 0 0;
+        font-size: 22px;
         letter-spacing: 0.5px;
         color: #332119;
       }
@@ -564,17 +420,17 @@
       .parents {
         display: grid;
         gap: 22px;
-        width: min(340px, 100%);
-        margin: 84px auto 0;
+        width: min(320px, 100%);
+        margin: 76px auto 0;
         color: #6f6a66;
-        font-size: 18px;
+        font-size: 17px;
         text-align: left;
       }
 
       .parents b {
         float: right;
         color: #181513;
-        font-size: 22px;
+        font-size: 21px;
         font-weight: 700;
       }
 
@@ -583,8 +439,8 @@
       .gallery {
         display: grid;
         gap: 14px;
-        width: min(300px, 80vw);
-        margin: 44px auto 32px;
+        width: min(300px, 100%);
+        margin: 40px auto 30px;
       }
 
       .gallery img {
@@ -593,10 +449,10 @@
       }
 
       .handwrite {
-        margin-top: 38px;
+        margin-top: 34px;
         font-family: "Parisienne", cursive;
-        font-size: 34px;
-        line-height: 1.15;
+        font-size: 32px;
+        line-height: 1.2;
         color: #33261e;
         transform: rotate(-2deg);
       }
@@ -609,15 +465,15 @@
       }
 
       .date-photo {
-        width: min(300px, 74vw);
-        height: 200px;
-        margin: 48px auto 56px;
+        width: min(300px, 100%);
+        height: 196px;
+        margin: 44px auto 52px;
         overflow: hidden;
         filter: sepia(0.2) saturate(0.8) brightness(0.85);
       }
 
       .calendar-title {
-        margin: 0 0 40px;
+        margin: 0 0 38px;
         font-size: 48px;
         line-height: 1;
         color: var(--cream);
@@ -626,22 +482,22 @@
       .calendar {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 14px 8px;
-        width: min(320px, 100%);
-        margin: 0 auto 48px;
-        font-size: 19px;
+        gap: 14px 6px;
+        width: min(310px, 100%);
+        margin: 0 auto 46px;
+        font-size: 18px;
       }
 
       .calendar span {
         display: grid;
         place-items: center;
-        min-height: 34px;
+        min-height: 32px;
       }
 
       .calendar .dow {
         color: #b7a99a;
-        font-size: 14px;
-        min-height: 20px;
+        font-size: 13px;
+        min-height: 18px;
       }
 
       .calendar .day {
@@ -654,12 +510,12 @@
         font-family: "Cormorant Garamond", serif;
         font-style: italic;
         font-weight: 600;
-        font-size: 23px;
+        font-size: 22px;
       }
 
       .dday {
-        margin-top: 62px;
-        font-size: 23px;
+        margin-top: 58px;
+        font-size: 22px;
         font-weight: 700;
         letter-spacing: 0.5px;
       }
@@ -667,15 +523,15 @@
       /* ---------- information / location ---------- */
 
       .info-photo {
-        width: min(400px, 94vw);
-        height: 126px;
-        margin: 48px auto 20px;
+        width: 100%;
+        height: 124px;
+        margin: 44px auto 18px;
         overflow: hidden;
         filter: saturate(0.72) contrast(0.96);
       }
 
       .dots {
-        margin: 34px 0 90px;
+        margin: 30px 0 78px;
         color: #d3d0cc;
         letter-spacing: 8px;
         font-size: 12px;
@@ -698,8 +554,8 @@
       }
 
       .map {
-        width: min(400px, 94vw);
-        margin: 30px auto 0;
+        width: 100%;
+        margin: 28px auto 0;
         border: 1px solid #ddd6cb;
         border-radius: 4px;
         overflow: hidden;
@@ -713,9 +569,9 @@
       }
 
       .map-address {
-        padding: 16px 14px;
+        padding: 15px 12px;
         border-top: 1px solid #e2ddd3;
-        font-size: 16px;
+        font-size: 15.5px;
         line-height: 1.6;
         text-align: center;
         color: #37302b;
@@ -724,8 +580,8 @@
       .map-buttons {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        width: min(400px, 94vw);
-        margin: 16px auto 0;
+        width: 100%;
+        margin: 14px auto 0;
         border: 1px solid #ddd6cb;
         border-radius: 4px;
         overflow: hidden;
@@ -733,24 +589,25 @@
       }
 
       .map-buttons a {
-        padding: 15px 4px;
+        padding: 14px 2px;
         border-right: 1px solid #e2ddd3;
         color: #201a17;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 14px;
       }
 
       .map-buttons a:last-child { border-right: 0; }
 
       .note {
-        width: min(400px, 94vw);
-        margin: 30px auto 0;
-        padding: 18px 18px;
+        width: 100%;
+        margin: 28px auto 0;
+        padding: 18px 16px;
         border-radius: 4px;
         background: rgba(43, 22, 15, 0.045);
         color: #57504a;
-        font-size: 15px;
+        font-size: 14.5px;
         line-height: 1.9;
+        text-align: left;
         word-break: keep-all;
       }
 
@@ -759,8 +616,8 @@
       /* ---------- transport ---------- */
 
       .transport {
-        width: min(370px, 92vw);
-        margin: 8px auto 0;
+        width: 100%;
+        margin: 6px auto 0;
         color: #7c766f;
         font-size: 15.5px;
         line-height: 1.8;
@@ -773,7 +630,7 @@
 
       .pill {
         display: inline-block;
-        margin: 30px 0 6px;
+        margin: 28px 0 6px;
         padding: 4px 16px;
         border-radius: 999px;
         color: #4a4038;
@@ -784,7 +641,7 @@
       }
 
       .contact {
-        margin-top: 32px;
+        margin-top: 30px;
         color: #8a847d;
         font-size: 15px;
       }
@@ -794,8 +651,8 @@
       .gift-tabs {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        width: min(390px, 92vw);
-        margin: 40px auto 8px;
+        width: 100%;
+        margin: 36px auto 8px;
         border-bottom: 1px solid #c9c4be;
       }
 
@@ -806,7 +663,7 @@
         background: none;
         color: #8a847d;
         font-family: inherit;
-        font-size: 17px;
+        font-size: 16px;
         cursor: pointer;
       }
 
@@ -820,89 +677,101 @@
 
       .account {
         display: grid;
-        grid-template-columns: 1.1fr 1.5fr auto;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        gap: 16px;
-        width: min(390px, 92vw);
-        margin: 26px auto;
+        gap: 12px;
+        width: 100%;
+        margin: 24px auto;
         text-align: left;
-        font-size: 16px;
+        font-size: 15px;
       }
 
-      .account b { font-size: 17px; }
+      .account b {
+        font-size: 15.5px;
+        white-space: nowrap;
+      }
+
+      .account .num {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
 
       .account small {
         display: block;
         color: #8b8782;
-        font-size: 13px;
+        font-size: 12.5px;
       }
 
       .copy {
         border: 0;
-        padding: 11px 13px;
+        padding: 10px 12px;
         color: #fff;
         background: var(--brown);
         font-family: inherit;
-        font-size: 13px;
+        font-size: 12.5px;
+        white-space: nowrap;
         cursor: pointer;
       }
 
       /* ---------- rsvp ---------- */
 
-      .rsvp { margin-top: 20px; }
+      .rsvp { margin-top: 12px; }
 
       .rsvp-button {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        width: min(390px, 92vw);
+        width: 100%;
         min-height: 60px;
-        margin: 24px auto 66px;
+        margin: 24px auto 60px;
         border: 0;
         color: #2d2926;
         background: rgba(43, 22, 15, 0.06);
         text-decoration: none;
-        font-size: 18px;
+        font-size: 17px;
       }
 
       .share {
         display: grid;
-        gap: 22px;
+        gap: 16px;
+        width: 100%;
         margin: 0 auto;
-        color: #33302e;
-        font-size: 19px;
-        letter-spacing: 0.5px;
       }
 
-      .final-section { padding-bottom: 340px; }
+      .share-btn {
+        border: 0;
+        background: none;
+        color: #33302e;
+        font-family: inherit;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+      }
+
+      .final-section { padding-bottom: 316px; }
 
       @media (prefers-reduced-motion: reduce) {
-        body.opened .cover { transition: opacity 300ms ease; }
-        body.opened .page,
-        body.opened .envelope-fixed,
-        body.opened .intro .star,
-        body.opened .intro .title-small,
-        body.opened .intro .title-script,
-        body.opened .intro .polaroid,
-        body.opened .intro .headline,
-        body.opened .intro .date-line,
-        body.opened .intro .sub-script,
-        body.opened .intro .paragraph {
+        .page,
+        .envelope-fixed,
+        .intro .star,
+        .intro .title-small,
+        .intro .title-script,
+        .intro .polaroid,
+        .intro .headline,
+        .intro .date-line,
+        .intro .sub-script,
+        .intro .paragraph {
           animation: none !important;
           opacity: 1 !important;
         }
-        .cover-flap { transition: none; }
-        .cover-hint { animation: none; }
       }
 
       @media (max-width: 430px) {
         :root { --frame: 22px; }
-        .env-quote { left: 30px; right: 30px; }
-        .music { right: 14px; bottom: 22px; }
         .account {
           grid-template-columns: 1fr;
-          gap: 6px;
+          gap: 5px;
           text-align: center;
         }
         .copy { width: 100%; }
@@ -910,18 +779,6 @@
     </style>
   </head>
   <body>
-    <div class="cover" id="cover">
-      <div class="cover-band">INVITED</div>
-      <div class="cover-env">
-        <div class="cover-flap"></div>
-        <div class="cover-seal">0109</div>
-      </div>
-      <div class="cover-hint">
-        <span>편지가 도착했습니다</span>
-        <span>스크롤하여 열어보세요 ⌄</span>
-      </div>
-    </div>
-
     <div class="top-band">INVITED</div>
     <div class="side-frame" aria-hidden="true"></div>
 
@@ -964,7 +821,7 @@
             </svg>
           </div>
           <h2 class="title-small">CELEBRATE!</h2>
-          <div class="party-photo soft-photo">
+          <div class="party-photo soft-photo block">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=80" alt="wedding couple walking">
           </div>
           <h2 class="party-title">OUR,<br>WEDDING <span class="script">Party</span></h2>
@@ -987,7 +844,7 @@
 
         <section class="dark reveal">
           <h2 class="title-small">DATE</h2>
-          <div class="date-photo">
+          <div class="date-photo block">
             <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=80" alt="green romantic landscape">
           </div>
           <div class="calendar-title script">January.</div>
@@ -1006,14 +863,10 @@
 
         <section class="reveal">
           <h2 class="title-small">INFORMATION</h2>
-          <div class="info-photo">
+          <div class="info-photo block">
             <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80" alt="wedding car">
           </div>
-          <p class="sub-script script" style="margin: 40px 0 30px; font-size: 30px;">Special Moment</p>
-          <p class="paragraph">
-            평생 간직할 소중한 추억을 만들어가는 시간입니다.<br>
-            웨딩의 모든 순간이 특별한 기억으로 남을 것입니다.
-          </p>
+          <p class="sub-script script" style="margin: 36px 0 26px; font-size: 30px;">Special Moment</p>
           <div class="dots">● ● <b>●</b> ● ●</div>
 
           <h2 class="title-small">LOCATION</h2>
@@ -1035,7 +888,6 @@
               <g fill="#8c7f68" font-size="10.5" text-anchor="middle" font-family="'Gowun Dodum',sans-serif">
                 <text x="91" y="76">현대</text><text x="91" y="90">백화점</text>
               </g>
-              <!-- stations -->
               <g>
                 <circle cx="150" cy="178" r="11" fill="#3f9d4e"/>
                 <text x="150" y="182" fill="#fff" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">2</text>
@@ -1044,7 +896,6 @@
                 <text x="330" y="182" fill="#fff" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">9</text>
                 <text x="330" y="202" fill="#6c6252" font-size="10.5" text-anchor="middle" font-family="'Gowun Dodum',sans-serif">봉은사역 7번 출구</text>
               </g>
-              <!-- venue pin -->
               <ellipse cx="175" cy="152" rx="11" ry="3.5" fill="#2b160f" opacity="0.16"/>
               <path d="M175 152 C175 152 194 124 194 106 A19 19 0 1 0 156 106 C156 124 175 152 175 152 Z" fill="#b0904c"/>
               <circle cx="175" cy="103" r="7.5" fill="#fbf3e4"/>
@@ -1064,7 +915,7 @@
           </div>
         </section>
 
-        <section class="reveal" style="padding-top: 44px;">
+        <section class="reveal">
           <div class="transport">
             <span class="pill">지하철</span>
             <p>2호선 <b>삼성역 5번 출구</b> 도보 7분<br>9호선 <b>봉은사역 7번 출구</b> 도보 10분</p>
@@ -1076,7 +927,7 @@
           <div class="contact">문의 02-2222-7401~5</div>
         </section>
 
-        <section class="reveal" style="padding-top: 44px;">
+        <section class="reveal">
           <h2 class="title-small">WEDDING GIFT</h2>
           <div class="gift-tabs">
             <button type="button" class="active" data-side="groom">신랑측에게</button>
@@ -1085,48 +936,48 @@
           <div class="account-group" data-side="groom">
             <div class="account">
               <b>신랑 | 선홍</b>
-              <span><small>카카오뱅크</small>1002-753-478932</span>
-              <button class="copy" data-copy="1002753478932">COPY ⧉</button>
+              <span class="num"><small>카카오뱅크</small>1002-753-478932</span>
+              <button class="copy" data-copy="1002753478932">COPY</button>
             </div>
             <div class="account">
               <b>아버지 | 김연중</b>
-              <span><small>우리은행</small>8223-7323-4123556</span>
-              <button class="copy" data-copy="822373234123556">COPY ⧉</button>
+              <span class="num"><small>우리은행</small>8223-7323-4123556</span>
+              <button class="copy" data-copy="822373234123556">COPY</button>
             </div>
             <div class="account">
               <b>어머니 | 서미경</b>
-              <span><small>IBK 기업은행</small>76443-2231-22345</span>
-              <button class="copy" data-copy="76443223122345">COPY ⧉</button>
+              <span class="num"><small>IBK 기업은행</small>76443-2231-22345</span>
+              <button class="copy" data-copy="76443223122345">COPY</button>
             </div>
           </div>
           <div class="account-group" data-side="bride" hidden>
             <div class="account">
               <b>신부 | 유정</b>
-              <span><small>카카오뱅크</small>3333-01-1234567</span>
-              <button class="copy" data-copy="3333011234567">COPY ⧉</button>
+              <span class="num"><small>카카오뱅크</small>3333-01-1234567</span>
+              <button class="copy" data-copy="3333011234567">COPY</button>
             </div>
             <div class="account">
               <b>아버지 | 김사일</b>
-              <span><small>국민은행</small>123-45-6789-012</span>
-              <button class="copy" data-copy="123456789012">COPY ⧉</button>
+              <span class="num"><small>국민은행</small>123-45-6789-012</span>
+              <button class="copy" data-copy="123456789012">COPY</button>
             </div>
             <div class="account">
               <b>어머니 | 김혜경</b>
-              <span><small>신한은행</small>110-123-456789</span>
-              <button class="copy" data-copy="110123456789">COPY ⧉</button>
+              <span class="num"><small>신한은행</small>110-123-456789</span>
+              <button class="copy" data-copy="110123456789">COPY</button>
             </div>
           </div>
         </section>
 
-        <section class="reveal final-section" style="padding-top: 44px;">
+        <section class="reveal final-section">
           <div class="rsvp">
             <h2 class="title-small">RSVP</h2>
-            <p class="paragraph" style="margin-top: 22px; color: #35302c;">기쁜 날, 함께해주시면 더없이 행복할 것 같아요</p>
+            <p class="paragraph" style="margin-top: 20px; color: #35302c;">기쁜 날, 함께해주시면 더없이 행복할 것 같아요</p>
             <a class="rsvp-button" href="mailto:hello@example.com">✉ 참석 여부 응답하기</a>
           </div>
           <div class="share">
-            <div>● Share KakaoTalk</div>
-            <div>↪ Copy Link</div>
+            <button type="button" class="share-btn js-kakao">● Share KakaoTalk</button>
+            <button type="button" class="share-btn js-copylink">↪ Copy Link</button>
           </div>
         </section>
       </div>
@@ -1137,30 +988,10 @@
       <div class="env-base"></div>
       <div class="env-bump"></div>
       <div class="env-seal">0109</div>
-      <div class="env-quote">Today, we are not just inviting you to witness a ceremony,<br>but to step into a story we chose to write together.</div>
+      <div class="env-quote">Today, we are not just inviting you to witness a ceremony, but to step into a story we chose to write together.</div>
     </div>
 
-    <button class="music" type="button" aria-label="music toggle">♫</button>
-
     <script>
-      // opening cover: unwrap on first scroll intent
-      const body = document.body;
-      body.classList.add("sealed");
-      let opened = false;
-      function openLetter() {
-        if (opened) return;
-        opened = true;
-        body.classList.remove("sealed");
-        body.classList.add("opened");
-        setTimeout(() => {
-          const cover = document.getElementById("cover");
-          if (cover) cover.remove();
-        }, 1750);
-      }
-      ["wheel", "touchmove", "keydown"].forEach((ev) =>
-        window.addEventListener(ev, openLetter, { passive: true }));
-      document.getElementById("cover").addEventListener("click", openLetter);
-
       // section reveal on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -1187,23 +1018,41 @@
         });
       });
 
-      // copy account numbers
+      // copy helpers
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+      function flash(el, msg) {
+        const original = el.textContent;
+        el.textContent = msg;
+        setTimeout(() => { el.textContent = original; }, 1400);
+      }
+
       document.querySelectorAll(".copy").forEach((button) => {
         button.addEventListener("click", async () => {
-          const text = button.dataset.copy;
-          try {
-            await navigator.clipboard.writeText(text);
-            button.textContent = "COPIED";
-            setTimeout(() => { button.textContent = "COPY ⧉"; }, 1200);
-          } catch {
-            alert(text);
-          }
+          const ok = await copyText(button.dataset.copy);
+          if (ok) flash(button, "복사됨");
+          else alert(button.dataset.copy);
         });
       });
 
-      // music toggle (icon only until an audio file is added)
-      document.querySelector(".music").addEventListener("click", (e) => {
-        e.currentTarget.textContent = e.currentTarget.textContent === "♫" ? "♪" : "♫";
+      const copyLink = document.querySelector(".js-copylink");
+      copyLink.addEventListener("click", async () => {
+        const ok = await copyText(location.href);
+        if (ok) flash(copyLink, "↪ 링크가 복사되었습니다");
+        else prompt("아래 링크를 복사하세요", location.href);
+      });
+
+      const kakao = document.querySelector(".js-kakao");
+      kakao.addEventListener("click", async () => {
+        const ok = await copyText(location.href);
+        if (ok) flash(kakao, "● 링크가 복사되었습니다");
+        else prompt("아래 링크를 복사하세요", location.href);
       });
     </script>
   </body>
