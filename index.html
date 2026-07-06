@@ -279,7 +279,7 @@
       .intro .polaroid,
       .intro .headline,
       .intro .date-line,
-      .intro .sub-script,
+      .intro .venue-line,
       .intro .paragraph {
         opacity: 0;
         animation: softAppear 850ms ease both;
@@ -290,8 +290,8 @@
       .intro .title-script { animation-delay: 510ms; }
       .intro .polaroid { animation-delay: 610ms; }
       .intro .headline { animation-delay: 720ms; }
-      .intro .date-line { animation-delay: 800ms; }
-      .intro .sub-script { animation-delay: 890ms; }
+      .intro .venue-line { animation-delay: 800ms; }
+      .intro .date-line { animation-delay: 890ms; }
       .intro .paragraph { animation-delay: 980ms; }
 
       @keyframes softAppear {
@@ -324,15 +324,15 @@
       }
 
       .title-script {
-        margin: 10px 0 42px;
+        margin: 8px 0 30px;
         color: #4b3a34;
         font-size: 50px;
         line-height: 1.15;
       }
 
       .polaroid {
-        width: min(268px, 82%);
-        margin: 0 auto 44px;
+        width: min(238px, 74%);
+        margin: 0 auto 30px;
         padding: 16px 16px 46px;
         background: #fff;
         box-shadow: 0 10px 28px rgba(43, 22, 15, 0.14);
@@ -375,6 +375,16 @@
         color: #201913;
       }
 
+      .venue-line {
+        margin: 18px 0 0;
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-weight: 700;
+        font-size: clamp(28px, 7vw, 36px);
+        letter-spacing: 1px;
+        color: #201913;
+      }
+
       .date-line {
         margin: 10px 0 0;
         font-family: "EB Garamond", serif;
@@ -399,6 +409,10 @@
         font-size: 17px;
         line-height: 2;
         word-break: keep-all;
+      }
+
+      .intro .paragraph {
+        margin-top: 48px;
       }
 
       /* ---------- celebrate ---------- */
@@ -796,7 +810,7 @@
         .intro .polaroid,
         .intro .headline,
         .intro .date-line,
-        .intro .sub-script,
+        .intro .venue-line,
         .intro .paragraph {
           animation: none !important;
           opacity: 1 !important;
@@ -847,8 +861,8 @@
           </div>
 
           <h2 class="headline">SUNHONG &#9829; YUJUNG</h2>
+          <div class="venue-line">SONO FELICE</div>
           <div class="date-line">2027.01.09 PM 1:00</div>
-          <p class="sub-script script">Celebrate Our Wedding Party</p>
           <p class="paragraph">
             서로에게 행복을 주는 사람을 만났습니다.<br>
             웃는 모습이 너무나 예쁜 그 사람을 만났습니다.<br>
