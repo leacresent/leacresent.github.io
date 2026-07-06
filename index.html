@@ -1019,18 +1019,14 @@
       }, { threshold: 0.15 });
       document.querySelectorAll(".reveal").forEach((s) => observer.observe(s));
 
-      // Brown frame stays opaque while the letter scrolls behind it; as the next
-      // section reaches the fold, each part slides off its own edge (no fading).
+      // Brown frame stays opaque and slides off its own edges quickly as soon as
+      // you start scrolling (top band up, side bars out, envelope V down).
       const frame = document.getElementById("frame");
-      const firstSection = document.querySelector(".reveal");
+      const RANGE = 130; // px of scroll to fully slide the frame away — short = quick swoosh
       let frameTick = false;
       function updateFrame() {
         frameTick = false;
-        const vh = window.innerHeight;
-        const top = firstSection.getBoundingClientRect().top;
-        // q: 0 while the intro fills the screen, 1 as the next section enters the lower fold
-        let q = (vh - top) / (0.6 * vh);
-        q = Math.min(1, Math.max(0, q));
+        let q = Math.min(1, Math.max(0, window.scrollY / RANGE));
         q = q * q * (3 - 2 * q); // smoothstep
         frame.style.setProperty("--q", q.toFixed(3));
       }
@@ -1038,7 +1034,6 @@
       window.addEventListener("scroll", () => {
         if (!frameTick) { frameTick = true; requestAnimationFrame(updateFrame); }
       }, { passive: true });
-      window.addEventListener("resize", updateFrame, { passive: true });
 
       // D-day countdown to 2027-01-09
       const weddingDay = new Date(2027, 0, 9);
