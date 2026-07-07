@@ -409,33 +409,50 @@
         letter-spacing: 0.5px;
       }
 
-      .gallery-strip {
+      .gallery-pages {
         display: flex;
-        gap: 12px;
         width: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding-bottom: 8px;
       }
 
-      .gallery-strip::-webkit-scrollbar { display: none; }
+      .gallery-pages::-webkit-scrollbar { display: none; }
 
-      /* leading/trailing spacers so the first & last photo can center */
-      .gallery-strip::before,
-      .gallery-strip::after {
-        content: "";
-        flex: 0 0 10%;
+      .gallery-page {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
       }
 
-      .gallery-strip img {
-        flex: 0 0 80%;
+      .gallery-page img {
+        width: 100%;
         aspect-ratio: 3 / 4;
         object-fit: cover;
-        scroll-snap-align: center;
         cursor: zoom-in;
         filter: saturate(0.72) contrast(0.96);
+      }
+
+      .gallery-dots {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        margin-top: 14px;
+      }
+
+      .gallery-dots span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--line);
+        transition: background 200ms ease;
+      }
+
+      .gallery-dots span.active {
+        background: var(--brown);
       }
 
       .lightbox {
@@ -445,27 +462,52 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 24px;
-        background: rgba(20, 15, 12, 0.92);
+        background: #000;
       }
       .lightbox[hidden] { display: none; }
       .lightbox img {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        border-radius: 2px;
+      }
+      .lightbox-count {
+        position: absolute;
+        top: 18px;
+        left: 20px;
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 1px;
       }
       .lightbox-x {
         position: absolute;
-        top: 16px;
-        right: 20px;
+        top: 12px;
+        right: 16px;
         border: 0;
         background: none;
-        color: #f6ede4;
+        color: #fff;
         font-size: 30px;
         line-height: 1;
         cursor: pointer;
       }
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .lightbox-nav.prev { left: 10px; }
+      .lightbox-nav.next { right: 10px; }
 
       .handwrite {
         margin-top: 34px;
@@ -1027,11 +1069,30 @@
         <section class="reveal">
           <h2 class="title-small">WEDDING GALLERY</h2>
           <div class="gallery-label">Wedding Photo</div>
-          <div class="gallery-strip">
-            <img src="images/placeholder.jpg" alt="wedding photo 1">
-            <img src="images/placeholder.jpg" alt="wedding photo 2">
-            <img src="images/placeholder.jpg" alt="wedding photo 3">
-            <img src="images/placeholder.jpg" alt="wedding photo 4">
+          <div class="gallery-pages" id="galleryPages">
+            <div class="gallery-page">
+              <img src="images/placeholder.jpg" alt="wedding photo 1">
+              <img src="images/placeholder.jpg" alt="wedding photo 2">
+              <img src="images/placeholder.jpg" alt="wedding photo 3">
+              <img src="images/placeholder.jpg" alt="wedding photo 4">
+              <img src="images/placeholder.jpg" alt="wedding photo 5">
+              <img src="images/placeholder.jpg" alt="wedding photo 6">
+              <img src="images/placeholder.jpg" alt="wedding photo 7">
+              <img src="images/placeholder.jpg" alt="wedding photo 8">
+            </div>
+            <div class="gallery-page">
+              <img src="images/placeholder.jpg" alt="wedding photo 9">
+              <img src="images/placeholder.jpg" alt="wedding photo 10">
+              <img src="images/placeholder.jpg" alt="wedding photo 11">
+              <img src="images/placeholder.jpg" alt="wedding photo 12">
+              <img src="images/placeholder.jpg" alt="wedding photo 13">
+              <img src="images/placeholder.jpg" alt="wedding photo 14">
+              <img src="images/placeholder.jpg" alt="wedding photo 15">
+              <img src="images/placeholder.jpg" alt="wedding photo 16">
+            </div>
+          </div>
+          <div class="gallery-dots" id="galleryDots" aria-hidden="true">
+            <span class="active"></span><span></span>
           </div>
           <div class="handwrite">It was not only a moment we shared,<br>but a love held forever.</div>
         </section>
@@ -1168,8 +1229,11 @@
     </main>
 
     <div class="lightbox" id="lightbox" hidden>
-      <button type="button" class="lightbox-x" aria-label="닫기">&times;</button>
-      <img src="" alt="">
+      <div class="lightbox-count" id="lightboxCount">1 / 16</div>
+      <button type="button" class="lightbox-x" id="lightboxClose" aria-label="닫기">&times;</button>
+      <button type="button" class="lightbox-nav prev" id="lightboxPrev" aria-label="이전">&#8249;</button>
+      <img id="lightboxImg" src="" alt="">
+      <button type="button" class="lightbox-nav next" id="lightboxNext" aria-label="다음">&#8250;</button>
     </div>
 
     <div class="rsvp-modal" id="rsvpModal" hidden>
@@ -1230,25 +1294,49 @@
       }, { threshold: 0.15 });
       document.querySelectorAll(".reveal").forEach((s) => observer.observe(s));
 
-      // gallery: tap a photo to enlarge in a lightbox
+      // gallery: paged grid dots + full-screen lightbox viewer with prev/next
+      const galleryPages = document.getElementById("galleryPages");
+      const galleryDots = document.getElementById("galleryDots");
+      if (galleryPages && galleryDots) {
+        const dots = [...galleryDots.children];
+        galleryPages.addEventListener("scroll", () => {
+          const i = Math.round(galleryPages.scrollLeft / galleryPages.clientWidth);
+          dots.forEach((d, n) => d.classList.toggle("active", n === i));
+        }, { passive: true });
+      }
+
       const lightbox = document.getElementById("lightbox");
       if (lightbox) {
-        const lbImg = lightbox.querySelector("img");
-        const closeLB = () => {
-          lightbox.hidden = true;
-          lbImg.src = "";
-          document.body.style.overflow = "";
+        const photos = [...document.querySelectorAll(".gallery-page img")];
+        const lbImg = document.getElementById("lightboxImg");
+        const lbCount = document.getElementById("lightboxCount");
+        let idx = 0;
+        const show = (i) => {
+          idx = (i + photos.length) % photos.length;
+          lbImg.src = photos[idx].src;
+          lbImg.alt = photos[idx].alt || "";
+          lbCount.textContent = (idx + 1) + " / " + photos.length;
         };
-        document.querySelectorAll(".gallery-strip img").forEach((img) => {
-          img.addEventListener("click", () => {
-            lbImg.src = img.src;
-            lbImg.alt = img.alt || "";
-            lightbox.hidden = false;
-            document.body.style.overflow = "hidden";
-          });
+        const open = (i) => { show(i); lightbox.hidden = false; document.body.style.overflow = "hidden"; };
+        const close = () => { lightbox.hidden = true; lbImg.src = ""; document.body.style.overflow = ""; };
+        photos.forEach((img, i) => img.addEventListener("click", () => open(i)));
+        document.getElementById("lightboxClose").addEventListener("click", close);
+        document.getElementById("lightboxPrev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
+        document.getElementById("lightboxNext").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
+        lightbox.addEventListener("click", (e) => { if (e.target === lightbox) close(); });
+        document.addEventListener("keydown", (e) => {
+          if (lightbox.hidden) return;
+          if (e.key === "Escape") close();
+          else if (e.key === "ArrowLeft") show(idx - 1);
+          else if (e.key === "ArrowRight") show(idx + 1);
         });
-        lightbox.addEventListener("click", closeLB);
-        document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lightbox.hidden) closeLB(); });
+        // swipe left/right on the image
+        let sx = 0;
+        lbImg.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].clientX; }, { passive: true });
+        lbImg.addEventListener("touchend", (e) => {
+          const dx = e.changedTouches[0].clientX - sx;
+          if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
+        }, { passive: true });
       }
 
       // D-day countdown to 2027-01-09
