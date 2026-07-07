@@ -264,13 +264,15 @@
       }
 
       .title-small::before {
-        content: "﹡";
+        content: "";
         display: block;
-        margin-bottom: 9px;
-        font-style: normal;
-        font-size: 17px;
-        line-height: 1;
-        opacity: 0.7;
+        width: 18px;
+        height: 18px;
+        margin: 0 auto 11px;
+        background-color: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20d%3D%27M50.00%2C2.00%20L54.97%2C37.99%20L83.94%2C16.06%20L62.01%2C45.03%20L98.00%2C50.00%20L62.01%2C54.97%20L83.94%2C83.94%20L54.97%2C62.01%20L50.00%2C98.00%20L45.03%2C62.01%20L16.06%2C83.94%20L37.99%2C54.97%20L2.00%2C50.00%20L37.99%2C45.03%20L16.06%2C16.06%20L45.03%2C37.99%20Z%27%20fill%3D%27black%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20d%3D%27M50.00%2C2.00%20L54.97%2C37.99%20L83.94%2C16.06%20L62.01%2C45.03%20L98.00%2C50.00%20L62.01%2C54.97%20L83.94%2C83.94%20L54.97%2C62.01%20L50.00%2C98.00%20L45.03%2C62.01%20L16.06%2C83.94%20L37.99%2C54.97%20L2.00%2C50.00%20L37.99%2C45.03%20L16.06%2C16.06%20L45.03%2C37.99%20Z%27%20fill%3D%27black%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+        opacity: 0.9;
       }
 
       .title-script {
