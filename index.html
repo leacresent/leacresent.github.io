@@ -871,7 +871,8 @@
         border-radius: 8px;
         background: #fdfcf8;
         font-family: inherit;
-        font-size: 15px;
+        /* 16px: iOS Safari가 16px 미만 입력창에 포커스 시 자동 확대되는 것 방지 */
+        font-size: 16px;
         color: #2b211d;
       }
       .rsvp-row input:focus {
