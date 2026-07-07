@@ -1210,7 +1210,7 @@
         </div>
 
         <div class="rsvp-done" hidden>
-          <div class="rsvp-done-mark">♡</div>
+          <div class="rsvp-done-mark" aria-hidden="true"><svg viewBox="0 0 32 29.6" width="34" height="31" fill="currentColor"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg></div>
           <p>참석 여부가 전달되었습니다.<br>소중한 걸음 감사합니다.</p>
           <button type="button" class="rsvp-send" data-close>확인</button>
         </div>
@@ -1299,7 +1299,7 @@
 
       // RSVP modal + submission
       // ↓ 구글 Apps Script 웹앱 URL을 넣으면 제출이 구글 시트에 쌓입니다.
-      const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbygZj7GNGvoK5fotm4kR6zVPFuY1Ldn46S2zNZPdmVf6d_hpuLSrkCpDlVSLGuUwxoR/exec";
+      const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbw_UvrWzcZlbtcfZz9TU5fAz5Un7Ui-sBfrr8XH7ki1XX_rRIBviUwciN4UX5Hi7yzs/exec";
       (function () {
         const modal = document.getElementById("rsvpModal");
         if (!modal) return;
