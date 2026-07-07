@@ -440,7 +440,7 @@
         display: flex;
         justify-content: center;
         gap: 7px;
-        margin-top: 14px;
+        margin: 14px 0 44px;
       }
 
       .gallery-dots span {
@@ -747,9 +747,9 @@
 
       .account {
         display: grid;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 116px minmax(0, 1fr) auto;
         align-items: center;
-        gap: 12px;
+        gap: 18px;
         width: 100%;
         margin: 18px auto;
         text-align: left;
@@ -1013,11 +1013,9 @@
       @media (max-width: 430px) {
         :root { --frame: 22px; }
         .account {
-          grid-template-columns: 1fr;
-          gap: 5px;
-          text-align: center;
+          grid-template-columns: 104px minmax(0, 1fr) auto;
+          gap: 12px;
         }
-        .copy { width: 100%; }
       }
     </style>
   </head>
@@ -1068,7 +1066,6 @@
 
         <section class="reveal">
           <h2 class="title-small">WEDDING GALLERY</h2>
-          <div class="gallery-label">Wedding Photo</div>
           <div class="gallery-pages" id="galleryPages">
             <div class="gallery-page">
               <img src="images/placeholder.jpg" alt="wedding photo 1">
@@ -1098,7 +1095,6 @@
           <div class="gallery-dots" id="galleryDots" aria-hidden="true">
             <span class="active"></span><span></span><span></span>
           </div>
-          <div class="handwrite">It was not only a moment we shared,<br>but a love held forever.</div>
         </section>
 
         <section class="dark reveal">
@@ -1123,7 +1119,6 @@
         <section class="reveal">
           <h2 class="title-small">LOCATION</h2>
           <p class="venue-name">소노펠리체 컨벤션 다이아몬드홀</p>
-          <p class="venue-hall">SONO FELICE</p>
           <div class="map">
             <svg viewBox="0 0 430 224" role="img" aria-label="소노펠리체 컨벤션 약도">
               <rect width="430" height="224" fill="#f2ede3"/>
