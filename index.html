@@ -747,9 +747,9 @@
 
       .account {
         display: grid;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 116px minmax(0, 1fr) auto;
         align-items: center;
-        gap: 12px;
+        gap: 18px;
         width: 100%;
         margin: 18px auto;
         text-align: left;
@@ -1013,11 +1013,9 @@
       @media (max-width: 430px) {
         :root { --frame: 22px; }
         .account {
-          grid-template-columns: 1fr;
-          gap: 5px;
-          text-align: center;
+          grid-template-columns: 104px minmax(0, 1fr) auto;
+          gap: 12px;
         }
-        .copy { width: 100%; }
       }
     </style>
   </head>
