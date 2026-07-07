@@ -399,61 +399,71 @@
 
       /* ---------- gallery ---------- */
 
-      .gallery-tabs {
+      .gallery-label {
+        margin: 30px auto 16px;
+        text-align: center;
+        color: #8a827b;
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+      }
+
+      .gallery-strip {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin: 34px auto 16px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .gallery-tabs button {
-        padding: 0 2px 12px;
-        border: 0;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
-        background: none;
-        color: #9a948c;
-        font-family: inherit;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      .gallery-tabs button.active {
-        border-bottom-color: var(--brown);
-        color: #33302e;
-      }
-
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
         gap: 12px;
         width: 100%;
-        margin: 0 auto;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 8px;
       }
 
-      .gallery-grid[hidden] { display: none; }
+      .gallery-strip::-webkit-scrollbar { display: none; }
 
-      .gallery-grid img {
-        display: block;
-        width: 100%;
+      /* leading/trailing spacers so the first & last photo can center */
+      .gallery-strip::before,
+      .gallery-strip::after {
+        content: "";
+        flex: 0 0 10%;
+      }
+
+      .gallery-strip img {
+        flex: 0 0 80%;
         aspect-ratio: 3 / 4;
         object-fit: cover;
+        scroll-snap-align: center;
+        cursor: zoom-in;
         filter: saturate(0.72) contrast(0.96);
       }
 
-      .gallery-grid img[hidden] { display: none; }
-
-      .view-more {
-        width: 100%;
-        margin-top: 6px;
-        padding: 16px 0;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        background: rgba(255, 255, 255, 0.55);
-        color: #57504a;
-        font-family: inherit;
-        font-size: 16px;
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 130;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(20, 15, 12, 0.92);
+      }
+      .lightbox[hidden] { display: none; }
+      .lightbox img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 2px;
+      }
+      .lightbox-x {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        border: 0;
+        background: none;
+        color: #f6ede4;
+        font-size: 30px;
+        line-height: 1;
         cursor: pointer;
       }
 
@@ -767,7 +777,7 @@
         cursor: pointer;
       }
 
-      .final-section { padding-bottom: 210px; }
+      .final-section { padding-bottom: 60px; }
 
       /* ---------- rsvp modal ---------- */
 
@@ -1016,25 +1026,13 @@
 
         <section class="reveal">
           <h2 class="title-small">WEDDING GALLERY</h2>
-          <div class="gallery-tabs">
-            <button type="button" class="active" data-g="story">Our Story</button>
-            <button type="button" data-g="photo">Wedding Photo</button>
+          <div class="gallery-label">Wedding Photo</div>
+          <div class="gallery-strip">
+            <img src="images/placeholder.jpg" alt="wedding photo 1">
+            <img src="images/placeholder.jpg" alt="wedding photo 2">
+            <img src="images/placeholder.jpg" alt="wedding photo 3">
+            <img src="images/placeholder.jpg" alt="wedding photo 4">
           </div>
-          <div class="gallery-grid" data-g="story">
-            <img src="images/placeholder.jpg" alt="wedding detail">
-            <img src="images/placeholder.jpg" alt="bride and groom">
-            <img src="images/placeholder.jpg" alt="couple in a car">
-            <img src="images/placeholder.jpg" alt="couple walking">
-            <img class="more" hidden src="images/placeholder.jpg" alt="couple in a garden">
-            <img class="more" hidden src="images/placeholder.jpg" alt="wedding car">
-          </div>
-          <div class="gallery-grid" data-g="photo" hidden>
-            <img src="images/placeholder.jpg" alt="wedding photo">
-            <img src="images/placeholder.jpg" alt="wedding car">
-            <img src="images/placeholder.jpg" alt="garden couple">
-            <img src="images/placeholder.jpg" alt="bride and groom">
-          </div>
-          <button type="button" class="view-more">view more</button>
           <div class="handwrite">It was not only a moment we shared,<br>but a love held forever.</div>
         </section>
 
@@ -1169,6 +1167,11 @@
       </div>
     </main>
 
+    <div class="lightbox" id="lightbox" hidden>
+      <button type="button" class="lightbox-x" aria-label="닫기">&times;</button>
+      <img src="" alt="">
+    </div>
+
     <div class="rsvp-modal" id="rsvpModal" hidden>
       <div class="rsvp-backdrop" data-close></div>
       <div class="rsvp-sheet" role="dialog" aria-modal="true" aria-labelledby="rsvpModalTitle">
@@ -1227,21 +1230,26 @@
       }, { threshold: 0.15 });
       document.querySelectorAll(".reveal").forEach((s) => observer.observe(s));
 
-      // gallery: tab switch + view more
-      const gTabs = document.querySelectorAll(".gallery-tabs button");
-      gTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          gTabs.forEach((t) => t.classList.toggle("active", t === tab));
-          document.querySelectorAll(".gallery-grid").forEach((g) => {
-            g.hidden = g.dataset.g !== tab.dataset.g;
+      // gallery: tap a photo to enlarge in a lightbox
+      const lightbox = document.getElementById("lightbox");
+      if (lightbox) {
+        const lbImg = lightbox.querySelector("img");
+        const closeLB = () => {
+          lightbox.hidden = true;
+          lbImg.src = "";
+          document.body.style.overflow = "";
+        };
+        document.querySelectorAll(".gallery-strip img").forEach((img) => {
+          img.addEventListener("click", () => {
+            lbImg.src = img.src;
+            lbImg.alt = img.alt || "";
+            lightbox.hidden = false;
+            document.body.style.overflow = "hidden";
           });
         });
-      });
-      const viewMore = document.querySelector(".view-more");
-      viewMore.addEventListener("click", () => {
-        document.querySelectorAll(".gallery-grid img.more").forEach((img) => { img.hidden = false; });
-        viewMore.hidden = true;
-      });
+        lightbox.addEventListener("click", closeLB);
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lightbox.hidden) closeLB(); });
+      }
 
       // D-day countdown to 2027-01-09
       const weddingDay = new Date(2027, 0, 9);
