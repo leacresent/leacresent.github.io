@@ -19,8 +19,10 @@
         --cream: #f6ede4;
         --ink: #2b211d;
         --muted: #77716c;
+        --red: #9e0000;
+        --ribbon: #8a0002;
         --card: 430px;
-        --frame: 28px;
+        --frame: 16px;
         --pad: 12px;
         --line: rgba(75, 66, 60, 0.16);
       }
@@ -67,144 +69,49 @@
         font-weight: 400;
       }
 
-      /* ---------- brown frame (top band + side bars + envelope V move as one group) ---------- */
+      /* ---------- red marquee band (top of the sheet) ---------- */
 
-      /* --q (0..1) is set from scroll: 0 = framed, 1 = frame slid away.
-         Each part stays fully opaque and slides off its own edge, so nothing
-         ever shows through a translucent brown. */
-      .frame {
-        position: fixed;
-        inset: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 40;
-        width: min(100%, var(--card));
-        pointer-events: none;
-        --q: 0;   /* top band + side bars: quick swoosh on scroll */
-        --vq: 0;  /* bottom envelope V: stays through the intro, leaves at the next section */
+      .ribbon-band {
+        position: relative;
+        overflow: hidden;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        background: var(--red);
       }
 
-      .top-band {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 46px;
-        display: grid;
-        place-items: center;
+      .ribbon-track {
+        display: flex;
+        flex: none;
+        white-space: nowrap;
+        will-change: transform;
+        animation: ribbonScroll 22s linear infinite;
+      }
+
+      .ribbon-track span {
         color: var(--cream);
-        background: var(--brown);
         font-family: "EB Garamond", serif;
         font-style: italic;
         font-weight: 700;
-        font-size: 22px;
-        letter-spacing: 4px;
-        transform: translateY(calc(var(--q) * -100%));
-        transition: transform 110ms linear;
+        font-size: 19px;
+        letter-spacing: 3px;
       }
 
-      .side-frame {
-        position: absolute;
-        inset: 0;
+      @keyframes ribbonScroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
       }
 
-      .side-frame::before,
-      .side-frame::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: var(--frame);
-        background: var(--brown);
-        transition: transform 110ms linear;
+      /* ---------- cherub illustration ---------- */
+
+      .angel {
+        display: block;
+        width: min(92%, 380px);
+        height: auto;
+        margin: 10px auto 2px;
       }
 
-      .side-frame::before { left: 0; transform: translateX(calc(var(--q) * -100%)); }
-      .side-frame::after { right: 0; transform: translateX(calc(var(--q) * 100%)); }
-
-      /* the bottom envelope V stays pinned to the viewport bottom; on scroll it
-         drifts down just enough (~95px) to tuck the quote out of view, then holds */
-      .envelope-fixed {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 262px;
-        transform: translateY(calc(var(--q) * 95px));
-        transition: transform 120ms linear;
-      }
-
-      .env-v {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 150px;
-      }
-
-      .env-v::before,
-      .env-v::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: var(--brown);
-      }
-
-      .env-v::before { clip-path: polygon(0 0, 50.2% 100%, 0 100%); }
-
-      .env-v::after {
-        clip-path: polygon(100% 0, 49.8% 100%, 100% 100%);
-      }
-
-      .env-bump {
-        position: absolute;
-        top: 118px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 68px;
-        height: 68px;
-        border-radius: 50%;
-        background: var(--brown);
-      }
-
-      .env-base {
-        position: absolute;
-        top: 149px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--brown);
-      }
-
-      .env-seal {
-        position: absolute;
-        top: 134px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: var(--cream);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 600;
-        font-size: 20px;
-        letter-spacing: 1px;
-        line-height: 1;
-      }
-
-      .env-quote {
-        position: absolute;
-        left: calc(var(--frame) + 12px);
-        right: calc(var(--frame) + 12px);
-        bottom: 30px;
-        color: #ffffff;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 1.7;
-        text-align: center;
-      }
-
-      /* ---------- the letter ---------- */
+      /* ---------- the sheet ---------- */
 
       .wrap {
         position: relative;
@@ -212,7 +119,6 @@
         width: min(100%, var(--card));
         margin: 0 auto;
         background: var(--paper);
-        box-shadow: 0 30px 80px rgba(43, 22, 15, 0.1);
         overflow: hidden;
       }
 
@@ -296,6 +202,7 @@
       .intro .star,
       .intro .title-small,
       .intro .title-script,
+      .intro .angel,
       .intro .polaroid,
       .intro .headline,
       .intro .date-line,
@@ -308,7 +215,8 @@
       .intro .star { animation-delay: 350ms; }
       .intro .title-small { animation-delay: 430ms; }
       .intro .title-script { animation-delay: 510ms; }
-      .intro .polaroid { animation-delay: 610ms; }
+      .intro .angel { animation-delay: 590ms; }
+      .intro .polaroid { animation-delay: 690ms; }
       .intro .headline { animation-delay: 720ms; }
       .intro .venue-line { animation-delay: 800ms; }
       .intro .date-line { animation-delay: 890ms; }
@@ -832,10 +740,11 @@
 
       @media (prefers-reduced-motion: reduce) {
         .page,
-        .envelope-fixed,
+        .ribbon-track,
         .intro .star,
         .intro .title-small,
         .intro .title-script,
+        .intro .angel,
         .intro .polaroid,
         .intro .headline,
         .intro .date-line,
@@ -858,23 +767,19 @@
     </style>
   </head>
   <body>
-    <div class="frame" id="frame" aria-hidden="true">
-      <div class="top-band"></div>
-      <div class="side-frame"></div>
-      <div class="envelope-fixed">
-        <div class="env-v"></div>
-        <div class="env-base"></div>
-        <div class="env-bump"></div>
-        <div class="env-seal">0109</div>
-        <div class="env-quote">Today, we are not just inviting you to witness a ceremony, but to step into a story we chose to write together.</div>
-      </div>
-    </div>
-
     <main class="wrap">
       <div class="page">
+        <div class="ribbon-band" aria-hidden="true">
+          <div class="ribbon-track">
+            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
+            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
+          </div>
+        </div>
         <section class="intro">
           <div class="intro-hero">
             <h1 class="title-script script">We Invite You</h1>
+
+            <img class="angel" src="angel.png" width="770" height="330" alt="리본을 든 두 천사 일러스트">
 
             <div class="polaroid">
               <div class="photo">
@@ -1086,26 +991,6 @@
         document.querySelectorAll(".gallery-grid img.more").forEach((img) => { img.hidden = false; });
         viewMore.hidden = true;
       });
-
-      // Two separate motions, both opaque:
-      //  --q  : top band + side bars swoosh away quickly the moment you scroll
-      //  --vq : the bottom envelope V (and the letter-paper V it frames) stays put
-      //         through the intro, then slides down only as the next section arrives
-      const frame = document.getElementById("frame");
-      const RANGE = 130;
-      let frameTick = false;
-      function updateFrame() {
-        frameTick = false;
-        let q = Math.min(1, Math.max(0, window.scrollY / RANGE));
-        q = q * q * (3 - 2 * q);
-        frame.style.setProperty("--q", q.toFixed(3));
-        // the bottom envelope V is a permanent footer — it never slides away
-      }
-      updateFrame();
-      window.addEventListener("scroll", () => {
-        if (!frameTick) { frameTick = true; requestAnimationFrame(updateFrame); }
-      }, { passive: true });
-      window.addEventListener("resize", updateFrame, { passive: true });
 
       // D-day countdown to 2027-01-09
       const weddingDay = new Date(2027, 0, 9);
