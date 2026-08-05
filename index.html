@@ -81,39 +81,6 @@
         font-weight: 400;
       }
 
-      /* ---------- red marquee band (top of the sheet) ---------- */
-
-      .ribbon-band {
-        position: relative;
-        overflow: hidden;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        background: var(--brown);
-      }
-
-      .ribbon-track {
-        display: flex;
-        flex: none;
-        white-space: nowrap;
-        will-change: transform;
-        animation: ribbonScroll 22s linear infinite;
-      }
-
-      .ribbon-track span {
-        color: var(--cream);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 19px;
-        letter-spacing: 3px;
-      }
-
-      @keyframes ribbonScroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-
       /* ---------- cherub illustration ---------- */
 
       .angel {
@@ -1224,7 +1191,6 @@
 
       @media (prefers-reduced-motion: reduce) {
         .page,
-        .ribbon-track,
         .intro .star,
         .intro .title-small,
         .intro .invite-script,
@@ -1258,12 +1224,6 @@
     </div>
     <main class="wrap">
       <div class="page">
-        <div class="ribbon-band" aria-hidden="true">
-          <div class="ribbon-track">
-            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
-            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
-          </div>
-        </div>
         <section class="intro">
           <div class="intro-hero">
             <h1 class="invite-script">We Invite You</h1>
