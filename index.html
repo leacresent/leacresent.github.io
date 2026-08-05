@@ -295,6 +295,7 @@
         overflow: hidden;
         background: linear-gradient(135deg, #cdbfae, #9c8a76);
         filter: saturate(0.9) contrast(0.97);
+        cursor: zoom-in;
       }
 
       .polaroid img,
@@ -372,10 +373,10 @@
 
       .party-photo {
         width: 100%;
-        height: 120px;
+        height: 180px;
         margin: 40px auto 50px;
         overflow: hidden;
-        filter: saturate(0.72);
+        cursor: zoom-in;
         mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
         -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
       }
@@ -417,6 +418,12 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        cursor: grab;
+      }
+
+      .gallery-pages.dragging {
+        cursor: grabbing;
+        scroll-snap-type: none;
       }
 
       .gallery-pages::-webkit-scrollbar { display: none; }
@@ -434,7 +441,6 @@
         aspect-ratio: 3 / 4;
         object-fit: cover;
         cursor: zoom-in;
-        filter: saturate(0.72) contrast(0.96);
       }
 
       .gallery-dots {
@@ -450,6 +456,7 @@
         border-radius: 50%;
         background: var(--line);
         transition: background 200ms ease;
+        cursor: pointer;
       }
 
       .gallery-dots span.active {
@@ -531,7 +538,6 @@
         height: 196px;
         margin: 44px auto 52px;
         overflow: hidden;
-        filter: sepia(0.2) saturate(0.8) brightness(0.85);
       }
 
       .calendar-title {
@@ -1046,10 +1052,9 @@
           </div>
 
           <p class="paragraph">
-            서로에게 행복을 주는 사람을 만났습니다.<br>
-            웃는 모습이 너무나 예쁜 그 사람을 만났습니다.<br>
-            운명처럼 만나게 된 우리의 인연,<br>
-            이제 영원을 함께 약속하려 합니다.
+            서로의 세상을 이해하고 품으며<br>
+            평생을 함께하기로 했습니다.<br>
+            기쁜 자리에 함께하시어 축복해 주세요.
           </p>
         </section>
 
@@ -1058,7 +1063,7 @@
           <div class="venue-line">SONO FELICE</div>
           <div class="date-line">2027.01.09 PM 1:00</div>
           <div class="party-photo soft-photo block">
-            <img src="images/placeholder.jpg" alt="wedding couple walking">
+            <img src="images/KakaoTalk_Photo_2026-08-05-12-59-49.jpeg" alt="wedding couple walking">
           </div>
           <div class="parents">
             <div>김연중 · 서미경의 아들 <b>김선홍</b></div>
@@ -1070,28 +1075,28 @@
           <h2 class="title-small">WEDDING PHOTO</h2>
           <div class="gallery-pages" id="galleryPages">
             <div class="gallery-page">
-              <img src="images/placeholder.jpg" alt="wedding photo 1">
-              <img src="images/placeholder.jpg" alt="wedding photo 2">
-              <img src="images/placeholder.jpg" alt="wedding photo 3">
-              <img src="images/placeholder.jpg" alt="wedding photo 4">
-              <img src="images/placeholder.jpg" alt="wedding photo 5">
-              <img src="images/placeholder.jpg" alt="wedding photo 6">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20016.jpeg" alt="wedding photo 1">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20017.jpeg" alt="wedding photo 2">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-31-07%20002.jpeg" alt="wedding photo 3">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20009.jpeg" alt="wedding photo 4">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20018.jpeg" alt="wedding photo 5">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20015.jpeg" alt="wedding photo 6">
             </div>
             <div class="gallery-page">
-              <img src="images/placeholder.jpg" alt="wedding photo 7">
-              <img src="images/placeholder.jpg" alt="wedding photo 8">
-              <img src="images/placeholder.jpg" alt="wedding photo 9">
-              <img src="images/placeholder.jpg" alt="wedding photo 10">
-              <img src="images/placeholder.jpg" alt="wedding photo 11">
-              <img src="images/placeholder.jpg" alt="wedding photo 12">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-56%20026.jpeg" alt="wedding photo 7">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-56%20024.jpeg" alt="wedding photo 8">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-56%20025.jpeg" alt="wedding photo 9">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20019.jpeg" alt="wedding photo 10">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-56%20028.jpeg" alt="wedding photo 11">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-31-16%20003.jpeg" alt="wedding photo 12">
             </div>
             <div class="gallery-page">
-              <img src="images/placeholder.jpg" alt="wedding photo 13">
-              <img src="images/placeholder.jpg" alt="wedding photo 14">
-              <img src="images/placeholder.jpg" alt="wedding photo 15">
-              <img src="images/placeholder.jpg" alt="wedding photo 16">
-              <img src="images/placeholder.jpg" alt="wedding photo 17">
-              <img src="images/placeholder.jpg" alt="wedding photo 18">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20011.jpeg" alt="wedding photo 13">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20010.jpeg" alt="wedding photo 14">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20012.jpeg" alt="wedding photo 15">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20007.jpeg" alt="wedding photo 16">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 17">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 18">
             </div>
           </div>
           <div class="gallery-dots" id="galleryDots" aria-hidden="true">
@@ -1276,11 +1281,48 @@
           const i = Math.round(galleryPages.scrollLeft / galleryPages.clientWidth);
           dots.forEach((d, n) => d.classList.toggle("active", n === i));
         }, { passive: true });
+
+        dots.forEach((d, n) => {
+          d.addEventListener("click", () => {
+            galleryPages.scrollTo({ left: n * galleryPages.clientWidth, behavior: "smooth" });
+          });
+        });
+
+        // mouse drag-to-swipe (touch already works natively via overflow-x scroll)
+        let isDown = false, startX = 0, startScroll = 0, moved = false;
+        galleryPages.addEventListener("mousedown", (e) => {
+          isDown = true; moved = false;
+          startX = e.pageX;
+          startScroll = galleryPages.scrollLeft;
+          galleryPages.classList.add("dragging");
+        });
+        window.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          const dx = e.pageX - startX;
+          if (Math.abs(dx) > 4) moved = true;
+          galleryPages.scrollLeft = startScroll - dx;
+        });
+        const endDrag = () => {
+          if (!isDown) return;
+          isDown = false;
+          galleryPages.classList.remove("dragging");
+          const i = Math.round(galleryPages.scrollLeft / galleryPages.clientWidth);
+          galleryPages.scrollTo({ left: i * galleryPages.clientWidth, behavior: "smooth" });
+        };
+        window.addEventListener("mouseup", endDrag);
+        galleryPages.addEventListener("mouseleave", () => { if (isDown) endDrag(); });
+        galleryPages.addEventListener("click", (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); } }, true);
       }
 
       const lightbox = document.getElementById("lightbox");
       if (lightbox) {
-        const photos = [...document.querySelectorAll(".gallery-page img")];
+        const heroPhoto = document.querySelector(".polaroid img");
+        const partyPhoto = document.querySelector(".party-photo img");
+        const photos = [
+          ...(heroPhoto ? [heroPhoto] : []),
+          ...(partyPhoto ? [partyPhoto] : []),
+          ...document.querySelectorAll(".gallery-page img"),
+        ];
         const lbImg = document.getElementById("lightboxImg");
         const lbCount = document.getElementById("lightboxCount");
         let idx = 0;
