@@ -31,8 +31,6 @@
         --cream: #f6ede4;
         --ink: #2b211d;
         --muted: #77716c;
-        --red: #9e0000;
-        --ribbon: #8a0002;
         --card: 430px;
         --frame: 16px;
         --pad: 12px;
@@ -80,41 +78,6 @@
         font-family: "Pinyon Script", cursive;
         font-weight: 400;
       }
-
-      /* ---------- red marquee band (top of the sheet) ---------- */
-
-      .ribbon-band {
-        position: relative;
-        overflow: hidden;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        background: var(--brown);
-      }
-
-      .ribbon-track {
-        display: flex;
-        flex: none;
-        white-space: nowrap;
-        will-change: transform;
-        animation: ribbonScroll 22s linear infinite;
-      }
-
-      .ribbon-track span {
-        color: var(--cream);
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 19px;
-        letter-spacing: 3px;
-      }
-
-      @keyframes ribbonScroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-
-      /* ---------- cherub illustration ---------- */
 
       /* ---------- the sheet ---------- */
 
@@ -187,7 +150,7 @@
       }
 
       .intro-hero {
-        padding-top: 46px;
+        padding-top: 8px;
       }
 
       .intro-hero .polaroid {
@@ -202,6 +165,7 @@
 
       .intro .star,
       .intro .title-small,
+      .intro .invite-script,
       .intro .polaroid,
       .intro .hero-title,
       .intro .date-line,
@@ -213,11 +177,21 @@
 
       .intro .star { animation-delay: 350ms; }
       .intro .title-small { animation-delay: 430ms; }
-      .intro .polaroid { animation-delay: 560ms; }
-      .intro .hero-title { animation-delay: 700ms; }
-      .intro .venue-line { animation-delay: 800ms; }
-      .intro .date-line { animation-delay: 890ms; }
+      .intro .invite-script { animation-delay: 480ms; }
+      .intro .polaroid { animation-delay: 610ms; }
+      .intro .hero-title { animation-delay: 740ms; }
+      .intro .venue-line { animation-delay: 830ms; }
+      .intro .date-line { animation-delay: 910ms; }
       .intro .paragraph { animation-delay: 980ms; }
+
+      .invite-script {
+        margin: 20px 0;
+        font-family: "Caveat", cursive;
+        font-weight: 700;
+        font-size: clamp(40px, 12vw, 52px);
+        line-height: 1.1;
+        color: var(--brown);
+      }
 
       .hero-title {
         position: absolute;
@@ -362,21 +336,19 @@
 
       .venue-line {
         margin: 46px 0 0;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-weight: 500;
-        font-size: clamp(28px, 7vw, 36px);
-        letter-spacing: 1px;
+        font-family: "Caveat", cursive;
+        font-weight: 700;
+        font-size: clamp(34px, 9vw, 44px);
+        letter-spacing: 0.5px;
         color: #201913;
       }
 
       .date-line {
-        margin: 10px 0 0;
-        font-family: "EB Garamond", serif;
-        font-style: italic;
-        font-size: clamp(27px, 6.8vw, 34px);
-        font-weight: 500;
-        letter-spacing: 0.5px;
+        margin: 6px 0 0;
+        font-family: "Caveat", cursive;
+        font-size: clamp(26px, 6.8vw, 32px);
+        font-weight: 600;
+        letter-spacing: 0.3px;
         color: #332119;
       }
 
@@ -660,7 +632,9 @@
 
       .calendar-title {
         margin: 0 0 38px;
-        font-size: 48px;
+        font-family: "Caveat", cursive;
+        font-weight: 700;
+        font-size: 58px;
         line-height: 1;
         color: var(--cream);
       }
@@ -1121,9 +1095,9 @@
 
       @media (prefers-reduced-motion: reduce) {
         .page,
-        .ribbon-track,
         .intro .star,
         .intro .title-small,
+        .intro .invite-script,
         .intro .polaroid,
         .intro .hero-title,
         .intro .date-line,
@@ -1146,14 +1120,10 @@
   <body>
     <main class="wrap">
       <div class="page">
-        <div class="ribbon-band" aria-hidden="true">
-          <div class="ribbon-track">
-            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
-            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
-          </div>
-        </div>
         <section class="intro">
           <div class="intro-hero">
+            <h1 class="invite-script">We Invite You</h1>
+
             <div class="polaroid">
               <div class="photo-card">
                 <div class="photo">
@@ -1203,6 +1173,25 @@
           <p class="quote-caption">love story is<br>beautiful but ours<br>is my favorite</p>
         </section>
 
+        <section class="dark reveal">
+          <h2 class="title-small">DATE</h2>
+          <div class="date-photo block">
+            <img src="images/date.jpg" alt="green romantic landscape">
+          </div>
+          <div class="calendar-title">January.</div>
+          <div class="calendar" aria-label="January 2027 calendar">
+            <span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span>
+            <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
+            <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span class="day">9</span>
+            <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+            <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+            <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+            <span>31</span>
+          </div>
+          <p class="full-date">Saturday, January 9, 2027</p>
+          <div class="dday" id="dday">D-DAY</div>
+        </section>
+
         <section class="reveal">
           <h2 class="title-small">WEDDING PHOTO</h2>
           <div class="gallery-pages" id="galleryPages">
@@ -1234,25 +1223,6 @@
           <div class="gallery-dots" id="galleryDots" aria-hidden="true">
             <span class="active"></span><span></span><span></span>
           </div>
-        </section>
-
-        <section class="dark reveal">
-          <h2 class="title-small">DATE</h2>
-          <div class="date-photo block">
-            <img src="images/date.jpg" alt="green romantic landscape">
-          </div>
-          <div class="calendar-title script">January.</div>
-          <div class="calendar" aria-label="January 2027 calendar">
-            <span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span>
-            <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
-            <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span class="day">9</span>
-            <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
-            <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
-            <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
-            <span>31</span>
-          </div>
-          <p class="full-date">Saturday, January 9, 2027</p>
-          <div class="dday" id="dday">D-DAY</div>
         </section>
 
         <section class="reveal">
