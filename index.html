@@ -92,6 +92,40 @@
         overflow: hidden;
       }
 
+      .lang-switch {
+        position: fixed;
+        top: 14px;
+        right: 14px;
+        z-index: 200;
+        display: flex;
+        gap: 2px;
+        padding: 3px;
+        background: rgba(247, 245, 238, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        box-shadow: 0 4px 12px rgba(43, 22, 15, 0.12);
+        backdrop-filter: blur(4px);
+      }
+
+      .lang-switch button {
+        border: 0;
+        background: none;
+        padding: 5px 12px;
+        font-family: "Gowun Dodum", "Noto Serif KR", serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--muted);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 150ms ease, color 150ms ease;
+      }
+
+      .lang-switch button.active {
+        background: var(--brown);
+        color: var(--cream);
+      }
+
       .wrap::before {
         content: "";
         position: absolute;
@@ -822,6 +856,13 @@
         word-break: keep-all;
       }
 
+      html[lang="ja"] .paragraph,
+      html[lang="ja"] .note,
+      html[lang="ja"] .transport {
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+
       .transport p { margin: 6px 0 4px; }
       .transport b { color: #37302b; font-weight: 500; }
 
@@ -886,6 +927,27 @@
       .account b {
         font-size: 15.5px;
         white-space: nowrap;
+      }
+
+      html[lang="ja"] .account {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "label label"
+          "num   copy";
+        row-gap: 6px;
+      }
+
+      html[lang="ja"] .account b {
+        grid-area: label;
+        white-space: normal;
+      }
+
+      html[lang="ja"] .account .num {
+        grid-area: num;
+      }
+
+      html[lang="ja"] .account .copy {
+        grid-area: copy;
       }
 
       .account .num {
@@ -1148,6 +1210,10 @@
     </style>
   </head>
   <body>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="ko" class="active">KO</button>
+      <button type="button" data-lang="ja">JA</button>
+    </div>
     <main class="wrap">
       <div class="page">
         <section class="intro">
@@ -1157,13 +1223,13 @@
             <div class="polaroid">
               <div class="photo-card">
                 <div class="photo">
-                  <img src="images/hero.jpg" alt="신랑 신부">
+                  <img src="images/hero.jpg" alt="신랑 신부" data-i18n-alt="altCouple">
                 </div>
               </div>
 
               <div class="photo-card">
                 <div class="photo">
-                  <img src="images/KakaoTalk_Photo_2026-08-05-12-31-08%20013.jpeg" alt="신랑 신부">
+                  <img src="images/KakaoTalk_Photo_2026-08-05-12-31-08%20013.jpeg" alt="신랑 신부" data-i18n-alt="altCouple">
                 </div>
 
                 <div class="hero-title">
@@ -1174,11 +1240,7 @@
             </div>
           </div>
 
-          <p class="paragraph">
-            서로의 세상을 이해하고 품으며<br>
-            평생을 함께하기로 했습니다.<br>
-            기쁜 자리에 함께하시어 축복해 주세요.
-          </p>
+          <p class="paragraph" data-i18n-html="greeting"></p>
         </section>
 
         <section class="reveal">
@@ -1189,15 +1251,15 @@
             <img src="images/KakaoTalk_Photo_2026-08-05-12-59-49.jpeg" alt="wedding couple walking" loading="lazy" decoding="async">
           </div>
           <div class="parents">
-            <div>김연중 · 서미경의 아들 <b>김선홍</b></div>
-            <div>김사일 · 김혜경의 딸 <b>김유정</b></div>
+            <div data-i18n-html="parentsGroom"></div>
+            <div data-i18n-html="parentsBride"></div>
           </div>
         </section>
 
         <section class="reveal quote-section">
           <div class="quote-card">
             <div class="photo">
-              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20009.jpeg" alt="반지를 확인하는 신랑 신부" loading="lazy" decoding="async">
+              <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20009.jpeg" alt="반지를 확인하는 신랑 신부" data-i18n-alt="altRingCheck" loading="lazy" decoding="async">
             </div>
           </div>
           <p class="quote-caption">love story is<br>beautiful but ours<br>is my favorite</p>
@@ -1210,7 +1272,7 @@
           </div>
           <div class="calendar-title">January.</div>
           <div class="calendar" aria-label="January 2027 calendar">
-            <span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span>
+            <span class="dow" data-i18n="dowSun">S</span><span class="dow" data-i18n="dowMon">M</span><span class="dow" data-i18n="dowTue">T</span><span class="dow" data-i18n="dowWed">W</span><span class="dow" data-i18n="dowThu">T</span><span class="dow" data-i18n="dowFri">F</span><span class="dow" data-i18n="dowSat">S</span>
             <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
             <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span class="day">9</span>
             <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
@@ -1218,7 +1280,7 @@
             <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
             <span>31</span>
           </div>
-          <p class="full-date">Saturday, January 9, 2027</p>
+          <p class="full-date" data-i18n="fullDate">Saturday, January 9, 2027</p>
           <div class="dday" id="dday">D-DAY</div>
         </section>
 
@@ -1231,13 +1293,13 @@
                   <img id="galleryMainImg" src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20016.jpeg" alt="wedding photo 1">
                 </div>
               </div>
-              <button type="button" class="gallery-nav prev" id="galleryPrev" aria-label="이전">&#8249;</button>
-              <button type="button" class="gallery-nav next" id="galleryNext" aria-label="다음">&#8250;</button>
+              <button type="button" class="gallery-nav prev" id="galleryPrev" aria-label="이전" data-i18n-aria-label="ariaPrev">&#8249;</button>
+              <button type="button" class="gallery-nav next" id="galleryNext" aria-label="다음" data-i18n-aria-label="ariaNext">&#8250;</button>
             </div>
             <div class="gallery-thumbs" id="galleryThumbs">
             <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20016.jpeg" alt="" loading="lazy" decoding="async" data-index="0" class="active">
             <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20017.jpeg" alt="" loading="lazy" decoding="async" data-index="1">
-            <img src="images/KakaoTalk_Photo_2026-08-05-12-31-07%20002.jpeg" alt="" loading="lazy" decoding="async" data-index="2">
+            <img src="images/KakaoTalk_Photo_2026-08-05-15-32-27.jpeg" alt="" loading="lazy" decoding="async" data-index="2">
             <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20018.jpeg" alt="" loading="lazy" decoding="async" data-index="3">
             <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20015.jpeg" alt="" loading="lazy" decoding="async" data-index="4">
             <img src="images/KakaoTalk_Photo_2026-08-05-12-32-56%20026.jpeg" alt="" loading="lazy" decoding="async" data-index="5">
@@ -1258,68 +1320,65 @@
 
         <section class="reveal">
           <h2 class="title-small">LOCATION</h2>
-          <p class="venue-name">소노펠리체 컨벤션 다이아몬드홀</p>
+          <p class="venue-name" data-i18n="venueName">소노펠리체 컨벤션 다이아몬드홀</p>
           <div class="map">
-            <img class="map-img" src="images/map.png" alt="소노펠리체 컨벤션 약도" loading="lazy" decoding="async">
-            <div class="map-address">서울특별시 강남구 테헤란로87길 22<br>(도심공항터미널 3층)</div>
+            <img class="map-img" src="images/map.png" alt="소노펠리체 컨벤션 약도" data-i18n-alt="mapAlt" loading="lazy" decoding="async">
+            <div class="map-address" data-i18n-html="address"></div>
           </div>
           <div class="map-buttons">
-            <a href="https://map.naver.com/p/search/%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank" rel="noopener">N 네이버지도</a>
-            <a href="tmap://search?name=%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98">T 티맵</a>
-            <a href="https://map.kakao.com/link/search/%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank" rel="noopener">카카오내비</a>
+            <a href="https://map.naver.com/p/search/%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank" rel="noopener" data-i18n="mapBtnNaver">N 네이버지도</a>
+            <a href="tmap://search?name=%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98" data-i18n="mapBtnTmap">T 티맵</a>
+            <a href="https://map.kakao.com/link/search/%EC%86%8C%EB%85%B8%ED%8E%A0%EB%A6%AC%EC%B2%B4%20%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank" rel="noopener" data-i18n="mapBtnKakao">카카오내비</a>
           </div>
-          <div class="note">
-            ▸ 예식 30분 전부터 로비에서 <b>웰컴 드링크</b>가 준비됩니다.<br>
-            ▸ 예식 10분 전부터 <b>신랑, 신부 입장</b>이 시작됩니다.
-          </div>
+          <div class="note" data-i18n-html="note"></div>
 
           <div class="transport">
-            <span class="pill">지하철</span>
-            <p>2호선 <b>삼성역 5번 출구</b> 도보 7분<br>9호선 <b>봉은사역 7번 출구</b> 도보 10분</p>
-            <span class="pill">버스</span>
-            <p><b>한국무역센터 · 삼성역</b> 정류장 하차 (도보 6분)</p>
-            <span class="pill">자가용 · 주차</span>
-            <p>내비게이션 「소노펠리체 컨벤션」<br>도심공항터미널 주차장 2시간 무료 (600대)</p>
+            <span class="pill" data-i18n="pillSubway">지하철</span>
+            <p data-i18n-html="subwayText"></p>
+            <span class="pill" data-i18n="pillBus">버스</span>
+            <p data-i18n-html="busText"></p>
+            <span class="pill" data-i18n="pillCar">자가용 · 주차</span>
+            <p data-i18n-html="carText"></p>
           </div>
         </section>
 
         <section class="reveal">
           <h2 class="title-small">WITH HEART</h2>
           <div class="gift-tabs">
-            <button type="button" class="active" data-side="groom">신랑측에게</button>
-            <button type="button" data-side="bride">신부측에게</button>
+            <button type="button" class="active" data-side="groom" data-i18n="tabToGroom">신랑측에게</button>
+            <button type="button" data-side="bride" data-i18n="tabToBride">신부측에게</button>
           </div>
           <div class="account-group" data-side="groom">
             <div class="account">
-              <b>신랑 | 김선홍</b>
-              <span class="num"><small>카카오뱅크</small>1234-5678</span>
+              <b data-i18n="acctGroomSelf">신랑 | 김선홍</b>
+              <span class="num"><small data-i18n="bankKakao">카카오뱅크</small>1234-5678</span>
               <button class="copy" data-copy="12345678">COPY</button>
             </div>
             <div class="account">
-              <b>아버지 | 김연중</b>
-              <span class="num"><small>우리은행</small>1234-5678</span>
+              <b data-i18n="acctGroomFather">아버지 | 김연중</b>
+              <span class="num"><small data-i18n="bankWoori">우리은행</small>1234-5678</span>
               <button class="copy" data-copy="12345678">COPY</button>
             </div>
             <div class="account">
-              <b>어머니 | 서미경</b>
-              <span class="num"><small>IBK 기업은행</small>1234-5678</span>
+              <b data-i18n="acctGroomMother">어머니 | 서미경</b>
+              <span class="num"><small data-i18n="bankIBK">IBK 기업은행</small>1234-5678</span>
               <button class="copy" data-copy="12345678">COPY</button>
             </div>
           </div>
           <div class="account-group" data-side="bride" hidden>
             <div class="account">
-              <b>신부 | 김유정</b>
-              <span class="num"><small>카카오뱅크</small>3333-06-4311488</span>
+              <b data-i18n="acctBrideSelf">신부 | 김유정</b>
+              <span class="num"><small data-i18n="bankKakao">카카오뱅크</small>3333-06-4311488</span>
               <button class="copy" data-copy="3333064311488">COPY</button>
             </div>
             <div class="account">
-              <b>아버지 | 김사일</b>
-              <span class="num"><small>국민은행</small>1234-5678</span>
+              <b data-i18n="acctBrideFather">아버지 | 김사일</b>
+              <span class="num"><small data-i18n="bankKookmin">국민은행</small>1234-5678</span>
               <button class="copy" data-copy="12345678">COPY</button>
             </div>
             <div class="account">
-              <b>어머니 | 김혜경</b>
-              <span class="num"><small>농협은행</small>352-0957-6707-93</span>
+              <b data-i18n="acctBrideMother">어머니 | 김혜경</b>
+              <span class="num"><small data-i18n="bankNonghyup">농협은행</small>352-0957-6707-93</span>
               <button class="copy" data-copy="3520957670793">COPY</button>
             </div>
           </div>
@@ -1328,12 +1387,12 @@
         <section class="reveal final-section">
           <div class="rsvp">
             <h2 class="title-small">RSVP</h2>
-            <p class="paragraph" style="margin-top: 20px; color: #35302c;">기쁜 날, 함께해주시는 모든 분들을 귀하게 모실 수 있도록 참석 의사를 전달 부탁드립니다.</p>
-            <button type="button" class="rsvp-button js-rsvp-open">✉ 참석 여부 전달하기</button>
+            <p class="paragraph" style="margin-top: 20px; color: #35302c;" data-i18n="rsvpIntro">기쁜 날, 함께해주시는 모든 분들을 귀하게 모실 수 있도록 참석 의사를 전달 부탁드립니다.</p>
+            <button type="button" class="rsvp-button js-rsvp-open" data-i18n="rsvpOpenBtn">✉ 참석 여부 전달하기</button>
           </div>
           <div class="share">
-            <button type="button" class="share-btn js-kakao">● Share KakaoTalk</button>
-            <button type="button" class="share-btn js-copylink">↪ Copy Link</button>
+            <button type="button" class="share-btn js-kakao" data-i18n="shareKakao">● Share KakaoTalk</button>
+            <button type="button" class="share-btn js-copylink" data-i18n="shareCopylink">↪ Copy Link</button>
           </div>
         </section>
       </div>
@@ -1342,10 +1401,10 @@
     <div class="lightbox" id="lightbox" hidden>
       <div class="lightbox-main">
         <div class="lightbox-count" id="lightboxCount">1 / 18</div>
-        <button type="button" class="lightbox-x" id="lightboxClose" aria-label="닫기">&times;</button>
-        <button type="button" class="lightbox-nav prev" id="lightboxPrev" aria-label="이전">&#8249;</button>
+        <button type="button" class="lightbox-x" id="lightboxClose" aria-label="닫기" data-i18n-aria-label="ariaClose">&times;</button>
+        <button type="button" class="lightbox-nav prev" id="lightboxPrev" aria-label="이전" data-i18n-aria-label="ariaPrev">&#8249;</button>
         <img id="lightboxImg" src="" alt="">
-        <button type="button" class="lightbox-nav next" id="lightboxNext" aria-label="다음">&#8250;</button>
+        <button type="button" class="lightbox-nav next" id="lightboxNext" aria-label="다음" data-i18n-aria-label="ariaNext">&#8250;</button>
       </div>
       <div class="lightbox-thumbs" id="lightboxThumbs"></div>
     </div>
@@ -1353,53 +1412,236 @@
     <div class="rsvp-modal" id="rsvpModal" hidden>
       <div class="rsvp-backdrop" data-close></div>
       <div class="rsvp-sheet" role="dialog" aria-modal="true" aria-labelledby="rsvpModalTitle">
-        <button type="button" class="rsvp-x" data-close aria-label="닫기">&times;</button>
-        <h3 id="rsvpModalTitle">참석 여부 회신 안내</h3>
+        <button type="button" class="rsvp-x" data-close aria-label="닫기" data-i18n-aria-label="ariaClose">&times;</button>
+        <h3 id="rsvpModalTitle" data-i18n="rsvpModalTitle">참석 여부 회신 안내</h3>
 
         <div class="rsvp-form-wrap">
           <div class="rsvp-tabs">
-            <button type="button" class="active" data-side="신랑측">신랑측</button>
-            <button type="button" data-side="신부측">신부측</button>
+            <button type="button" class="active" data-side="신랑측" data-i18n="rsvpTabGroom">신랑측</button>
+            <button type="button" data-side="신부측" data-i18n="rsvpTabBride">신부측</button>
           </div>
 
           <form id="rsvpForm" novalidate>
             <div class="rsvp-row">
-              <label for="rsvpName">성함 <i>*</i></label>
-              <input id="rsvpName" name="name" type="text" placeholder="성함" autocomplete="name">
+              <label for="rsvpName" data-i18n="labelName">성함 <i>*</i></label>
+              <input id="rsvpName" name="name" type="text" placeholder="성함" data-i18n-placeholder="placeholderName" autocomplete="name">
             </div>
             <div class="rsvp-row">
-              <label for="rsvpCount">참석인원 <i>*</i></label>
-              <input id="rsvpCount" name="count" type="number" min="1" inputmode="numeric" placeholder="인원수">
+              <label for="rsvpCount" data-i18n="labelCount">참석인원 <i>*</i></label>
+              <input id="rsvpCount" name="count" type="number" min="1" inputmode="numeric" placeholder="인원수" data-i18n-placeholder="placeholderCount">
             </div>
             <div class="rsvp-row">
-              <label>식사여부 <i>*</i></label>
-              <div class="rsvp-meal" role="group" aria-label="식사여부">
-                <button type="button" data-meal="예정">예정</button>
-                <button type="button" data-meal="안함">안함</button>
-                <button type="button" data-meal="미정">미정</button>
+              <label data-i18n="labelMeal">식사여부 <i>*</i></label>
+              <div class="rsvp-meal" role="group" aria-label="식사여부" data-i18n-aria-label="labelMeal">
+                <button type="button" data-meal="예정" data-i18n="mealYes">예정</button>
+                <button type="button" data-meal="안함" data-i18n="mealNo">안함</button>
+                <button type="button" data-meal="미정" data-i18n="mealTBD">미정</button>
               </div>
             </div>
 
-            <p class="rsvp-note">※ 전달한 내용은 수정이 불가합니다.<br>내용 변동이 있을 경우 재전달해주세요.</p>
+            <p class="rsvp-note" data-i18n-html="rsvpNote"></p>
 
             <label class="rsvp-consent">
               <input type="checkbox" id="rsvpConsent">
-              <span>개인정보 수집 및 이용에 동의합니다. <b>(필수)</b></span>
+              <span data-i18n-html="rsvpConsent"></span>
             </label>
 
-            <button type="submit" class="rsvp-send">참석 여부 전달하기</button>
+            <button type="submit" class="rsvp-send" data-i18n="rsvpSubmit">참석 여부 전달하기</button>
           </form>
         </div>
 
         <div class="rsvp-done" hidden>
           <div class="rsvp-done-mark" aria-hidden="true"><svg viewBox="0 0 32 29.6" width="34" height="31" fill="currentColor"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg></div>
-          <p>참석 여부가 전달되었습니다.<br>소중한 걸음 감사합니다.</p>
-          <button type="button" class="rsvp-send" data-close>확인</button>
+          <p data-i18n-html="rsvpDoneMessage"></p>
+          <button type="button" class="rsvp-send" data-close data-i18n="rsvpDoneConfirm">확인</button>
         </div>
       </div>
     </div>
 
     <script>
+      // ---------- i18n (KO / JA) ----------
+      const translations = {
+        ko: {
+          greeting: "서로의 세상을 이해하고 품으며<br>평생을 함께하기로 했습니다.<br>기쁜 자리에 함께하시어 축복해 주세요.",
+          altCouple: "신랑 신부",
+          altRingCheck: "반지를 확인하는 신랑 신부",
+          parentsGroom: "김연중 · 서미경의 아들 <b>김선홍</b>",
+          parentsBride: "김사일 · 김혜경의 딸 <b>김유정</b>",
+          dowSun: "S", dowMon: "M", dowTue: "T", dowWed: "W", dowThu: "T", dowFri: "F", dowSat: "S",
+          fullDate: "Saturday, January 9, 2027",
+          ariaPrev: "이전",
+          ariaNext: "다음",
+          ariaClose: "닫기",
+          venueName: "소노펠리체 컨벤션 다이아몬드홀",
+          mapAlt: "소노펠리체 컨벤션 약도",
+          address: "서울특별시 강남구 테헤란로87길 22<br>(도심공항터미널 3층)",
+          mapBtnNaver: "N 네이버지도",
+          mapBtnTmap: "T 티맵",
+          mapBtnKakao: "카카오내비",
+          note: "▸ 예식 30분 전부터 로비에서 <b>웰컴 드링크</b>가 준비됩니다.<br>▸ 예식 10분 전부터 <b>신랑, 신부 입장</b>이 시작됩니다.",
+          pillSubway: "지하철",
+          subwayText: "2호선 <b>삼성역 5번 출구</b> 도보 7분<br>9호선 <b>봉은사역 7번 출구</b> 도보 10분",
+          pillBus: "버스",
+          busText: "<b>한국무역센터 · 삼성역</b> 정류장 하차 (도보 6분)",
+          pillCar: "자가용 · 주차",
+          carText: "내비게이션 「소노펠리체 컨벤션」<br>도심공항터미널 주차장 2시간 무료 (600대)",
+          tabToGroom: "신랑측에게",
+          tabToBride: "신부측에게",
+          acctGroomSelf: "신랑 | 김선홍",
+          acctGroomFather: "아버지 | 김연중",
+          acctGroomMother: "어머니 | 서미경",
+          acctBrideSelf: "신부 | 김유정",
+          acctBrideFather: "아버지 | 김사일",
+          acctBrideMother: "어머니 | 김혜경",
+          bankKakao: "카카오뱅크",
+          bankWoori: "우리은행",
+          bankIBK: "IBK 기업은행",
+          bankKookmin: "국민은행",
+          bankNonghyup: "농협은행",
+          rsvpIntro: "기쁜 날, 함께해주시는 모든 분들을 귀하게 모실 수 있도록 참석 의사를 전달 부탁드립니다.",
+          rsvpOpenBtn: "✉ 참석 여부 전달하기",
+          shareKakao: "● Share KakaoTalk",
+          shareCopylink: "↪ Copy Link",
+          rsvpModalTitle: "참석 여부 회신 안내",
+          rsvpTabGroom: "신랑측",
+          rsvpTabBride: "신부측",
+          labelName: "성함 <i>*</i>",
+          placeholderName: "성함",
+          labelCount: "참석인원 <i>*</i>",
+          placeholderCount: "인원수",
+          labelMeal: "식사여부 <i>*</i>",
+          mealYes: "예정",
+          mealNo: "안함",
+          mealTBD: "미정",
+          rsvpNote: "※ 전달한 내용은 수정이 불가합니다.<br>내용 변동이 있을 경우 재전달해주세요.",
+          rsvpConsent: "개인정보 수집 및 이용에 동의합니다. <b>(필수)</b>",
+          rsvpSubmit: "참석 여부 전달하기",
+          rsvpDoneMessage: "참석 여부가 전달되었습니다.<br>소중한 걸음 감사합니다.",
+          rsvpDoneConfirm: "확인",
+          flashCopied: "복사됨",
+          flashLinkCopied: "↪ 링크가 복사되었습니다",
+          flashKakaoCopied: "● 링크가 복사되었습니다",
+          promptCopyLink: "아래 링크를 복사하세요",
+          alertName: "성함을 입력해주세요.",
+          alertCount: "참석인원을 입력해주세요.",
+          alertMeal: "식사여부를 선택해주세요.",
+          alertConsent: "개인정보 수집 및 이용에 동의해주세요.",
+          alertNotConfigured: "아직 접수 시트가 연결되지 않았습니다.\n(관리자: 구글 시트 연결이 필요합니다)",
+          sendingText: "전달 중…",
+          alertSendFailed: "전달에 실패했습니다. 잠시 후 다시 시도해주세요.",
+        },
+        ja: {
+          greeting: "互いを理解し、支え合いながら<br>共に歩んでいくことを誓いました。<br>ぜひ私たちの門出を見守り、<br>祝福していただけましたら幸いです。",
+          altCouple: "新郎新婦",
+          altRingCheck: "指輪を確認する新郎新婦",
+          parentsGroom: "キム・ヨンジュン、ソ・ミギョンの息子 <b>キム・ソンホン</b>",
+          parentsBride: "キム・サイル、キム・ヘギョンの娘 <b>キム・ユジョン</b>",
+          dowSun: "日", dowMon: "月", dowTue: "火", dowWed: "水", dowThu: "木", dowFri: "金", dowSat: "土",
+          fullDate: "2027年1月9日(土)",
+          ariaPrev: "前へ",
+          ariaNext: "次へ",
+          ariaClose: "閉じる",
+          venueName: "ソノフェリーチェコンベンション<br>ダイヤモンドホール",
+          mapAlt: "ソノフェリーチェコンベンションの地図",
+          address: "ソウル特別市江南区テヘラン路87キル22<br>(都心空港ターミナル3階)",
+          mapBtnNaver: "N Naver Map",
+          mapBtnTmap: "T Tmap",
+          mapBtnKakao: "Kakao Navi",
+          note: "▸ 挙式30分前よりロビーにて<b>ウェルカムドリンク</b>をご用意しております。<br>▸ 挙式10分前より<b>新郎新婦の入場</b>が始まります。",
+          pillSubway: "地下鉄",
+          subwayText: "2号線 <b>三成(サムソン)駅5番出口</b> 徒歩7分<br>9号線 <b>奉恩寺(ポンウンサ)駅7番出口</b> 徒歩10分",
+          pillBus: "バス",
+          busText: "<b>韓国貿易センター・三成駅</b>バス停下車 (徒歩6分)",
+          pillCar: "お車・駐車場",
+          carText: "カーナビ「ソノフェリーチェコンベンション」<br>都心空港ターミナル駐車場 2時間無料 (600台)",
+          tabToGroom: "新郎側へ",
+          tabToBride: "新婦側へ",
+          acctGroomSelf: "新郎 | キム・ソンホン",
+          acctGroomFather: "父 | キム・ヨンジュン",
+          acctGroomMother: "母 | ソ・ミギョン",
+          acctBrideSelf: "新婦 | キム・ユジョン",
+          acctBrideFather: "父 | キム・サイル",
+          acctBrideMother: "母 | キム・ヘギョン",
+          bankKakao: "カカオバンク",
+          bankWoori: "ウリィ銀行",
+          bankIBK: "IBK企業銀行",
+          bankKookmin: "国民銀行",
+          bankNonghyup: "農協銀行",
+          rsvpIntro: "喜びの日を共に過ごしてくださる皆様を大切にお迎えできるよう、出欠のご連絡をお願いいたします。",
+          rsvpOpenBtn: "✉ 出欠のご連絡",
+          shareKakao: "● カカオトークで共有",
+          shareCopylink: "↪ リンクをコピー",
+          rsvpModalTitle: "出欠のご返信について",
+          rsvpTabGroom: "新郎側",
+          rsvpTabBride: "新婦側",
+          labelName: "お名前 <i>*</i>",
+          placeholderName: "お名前",
+          labelCount: "参加人数 <i>*</i>",
+          placeholderCount: "人数",
+          labelMeal: "お食事 <i>*</i>",
+          mealYes: "予定",
+          mealNo: "なし",
+          mealTBD: "未定",
+          rsvpNote: "※送信内容は修正できません。<br>内容に変更がある場合は再度お送りください。",
+          rsvpConsent: "個人情報の収集および利用に同意します。 <b>(必須)</b>",
+          rsvpSubmit: "出欠を送信する",
+          rsvpDoneMessage: "出欠のご連絡を承りました。<br>お心遣いに感謝申し上げます。",
+          rsvpDoneConfirm: "確認",
+          flashCopied: "コピーしました",
+          flashLinkCopied: "↪ リンクをコピーしました",
+          flashKakaoCopied: "● リンクをコピーしました",
+          promptCopyLink: "下のリンクをコピーしてください",
+          alertName: "お名前を入力してください。",
+          alertCount: "参加人数を入力してください。",
+          alertMeal: "お食事の有無を選択してください。",
+          alertConsent: "個人情報の収集および利用に同意してください。",
+          alertNotConfigured: "まだ受付シートが連携されていません。\n(管理者: Googleスプレッドシートの連携が必要です)",
+          sendingText: "送信中…",
+          alertSendFailed: "送信に失敗しました。しばらくしてからもう一度お試しください。",
+        },
+      };
+
+      let currentLang = localStorage.getItem("weddingLang") || "ko";
+
+      function t(key) {
+        const dict = translations[currentLang] || translations.ko;
+        return dict[key] ?? translations.ko[key] ?? key;
+      }
+
+      function applyTranslations() {
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.innerHTML = t(el.getAttribute("data-i18n"));
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+          el.innerHTML = t(el.getAttribute("data-i18n-html"));
+        });
+        document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+          el.alt = t(el.getAttribute("data-i18n-alt"));
+        });
+        document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+          el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria-label")));
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
+        });
+        document.querySelectorAll(".lang-switch button").forEach((b) => {
+          b.classList.toggle("active", b.dataset.lang === currentLang);
+        });
+      }
+
+      function setLang(lang) {
+        currentLang = lang;
+        localStorage.setItem("weddingLang", lang);
+        applyTranslations();
+      }
+
+      document.querySelectorAll(".lang-switch button").forEach((b) => {
+        b.addEventListener("click", () => setLang(b.dataset.lang));
+      });
+
+      applyTranslations();
+
       // section reveal on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -1539,7 +1781,7 @@
       document.querySelectorAll(".copy").forEach((button) => {
         button.addEventListener("click", async () => {
           const ok = await copyText(button.dataset.copy);
-          if (ok) flash(button, "복사됨");
+          if (ok) flash(button, t("flashCopied"));
           else alert(button.dataset.copy);
         });
       });
@@ -1547,15 +1789,15 @@
       const copyLink = document.querySelector(".js-copylink");
       copyLink.addEventListener("click", async () => {
         const ok = await copyText(location.href);
-        if (ok) flash(copyLink, "↪ 링크가 복사되었습니다");
-        else prompt("아래 링크를 복사하세요", location.href);
+        if (ok) flash(copyLink, t("flashLinkCopied"));
+        else prompt(t("promptCopyLink"), location.href);
       });
 
       const kakao = document.querySelector(".js-kakao");
       kakao.addEventListener("click", async () => {
         const ok = await copyText(location.href);
-        if (ok) flash(kakao, "● 링크가 복사되었습니다");
-        else prompt("아래 링크를 복사하세요", location.href);
+        if (ok) flash(kakao, t("flashKakaoCopied"));
+        else prompt(t("promptCopyLink"), location.href);
       });
 
       // RSVP modal + submission
@@ -1577,7 +1819,7 @@
           meal = "";
           modal.querySelectorAll(".rsvp-meal button").forEach((b) => b.classList.remove("active"));
           sendBtn.disabled = false;
-          sendBtn.textContent = "참석 여부 전달하기";
+          sendBtn.textContent = t("rsvpSubmit");
           formWrap.hidden = false;
           doneView.hidden = true;
         }
@@ -1601,17 +1843,17 @@
           const name = document.getElementById("rsvpName").value.trim();
           const count = document.getElementById("rsvpCount").value.trim();
           const consent = document.getElementById("rsvpConsent").checked;
-          if (!name) { alert("성함을 입력해주세요."); return; }
-          if (!count || Number(count) < 1) { alert("참석인원을 입력해주세요."); return; }
-          if (!meal) { alert("식사여부를 선택해주세요."); return; }
-          if (!consent) { alert("개인정보 수집 및 이용에 동의해주세요."); return; }
+          if (!name) { alert(t("alertName")); return; }
+          if (!count || Number(count) < 1) { alert(t("alertCount")); return; }
+          if (!meal) { alert(t("alertMeal")); return; }
+          if (!consent) { alert(t("alertConsent")); return; }
 
           if (!RSVP_ENDPOINT) {
-            alert("아직 접수 시트가 연결되지 않았습니다.\n(관리자: 구글 시트 연결이 필요합니다)");
+            alert(t("alertNotConfigured"));
             return;
           }
           sendBtn.disabled = true;
-          sendBtn.textContent = "전달 중…";
+          sendBtn.textContent = t("sendingText");
           try {
             await fetch(RSVP_ENDPOINT, {
               method: "POST",
@@ -1621,9 +1863,9 @@
             formWrap.hidden = true;
             doneView.hidden = false;
           } catch (err) {
-            alert("전달에 실패했습니다. 잠시 후 다시 시도해주세요.");
+            alert(t("alertSendFailed"));
             sendBtn.disabled = false;
-            sendBtn.textContent = "참석 여부 전달하기";
+            sendBtn.textContent = t("rsvpSubmit");
           }
         });
       })();
