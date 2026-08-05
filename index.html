@@ -81,6 +81,48 @@
         font-weight: 400;
       }
 
+      /* ---------- red marquee band (top of the sheet) ---------- */
+
+      .ribbon-band {
+        position: relative;
+        overflow: hidden;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        background: var(--brown);
+      }
+
+      .ribbon-track {
+        display: flex;
+        flex: none;
+        white-space: nowrap;
+        will-change: transform;
+        animation: ribbonScroll 22s linear infinite;
+      }
+
+      .ribbon-track span {
+        color: var(--cream);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: 3px;
+      }
+
+      @keyframes ribbonScroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      /* ---------- cherub illustration ---------- */
+
+      .angel {
+        display: block;
+        width: min(92%, 380px);
+        height: auto;
+        margin: 10px auto 32px;
+      }
+
       /* ---------- the sheet ---------- */
 
       .wrap {
@@ -98,32 +140,28 @@
         right: 14px;
         z-index: 200;
         display: flex;
-        gap: 2px;
-        padding: 3px;
-        background: rgba(247, 245, 238, 0.9);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        box-shadow: 0 4px 12px rgba(43, 22, 15, 0.12);
-        backdrop-filter: blur(4px);
+        align-items: center;
+        gap: 6px;
       }
 
       .lang-switch button {
         border: 0;
         background: none;
-        padding: 5px 12px;
+        padding: 3px 1px;
         font-family: "Gowun Dodum", "Noto Serif KR", serif;
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 11px;
+        font-weight: 600;
         letter-spacing: 0.5px;
-        color: var(--muted);
-        border-radius: 999px;
+        color: rgba(75, 66, 60, 0.45);
+        border-bottom: 1.5px solid transparent;
         cursor: pointer;
-        transition: background 150ms ease, color 150ms ease;
+        transition: color 150ms ease, border-color 150ms ease;
       }
 
       .lang-switch button.active {
-        background: var(--brown);
-        color: var(--cream);
+        color: var(--brown);
+        font-weight: 700;
+        border-bottom-color: var(--brown);
       }
 
       .wrap::before {
@@ -218,6 +256,7 @@
       .intro .star,
       .intro .title-small,
       .intro .invite-script,
+      .intro .angel,
       .intro .polaroid,
       .intro .hero-title,
       .intro .date-line,
@@ -230,11 +269,12 @@
       .intro .star { animation-delay: 350ms; }
       .intro .title-small { animation-delay: 430ms; }
       .intro .invite-script { animation-delay: 480ms; }
-      .intro .polaroid { animation-delay: 610ms; }
-      .intro .hero-title { animation-delay: 740ms; }
-      .intro .venue-line { animation-delay: 830ms; }
-      .intro .date-line { animation-delay: 910ms; }
-      .intro .paragraph { animation-delay: 980ms; }
+      .intro .angel { animation-delay: 560ms; }
+      .intro .polaroid { animation-delay: 660ms; }
+      .intro .hero-title { animation-delay: 790ms; }
+      .intro .venue-line { animation-delay: 880ms; }
+      .intro .date-line { animation-delay: 960ms; }
+      .intro .paragraph { animation-delay: 1030ms; }
 
       .invite-script {
         margin: 20px 0;
@@ -1184,9 +1224,11 @@
 
       @media (prefers-reduced-motion: reduce) {
         .page,
+        .ribbon-track,
         .intro .star,
         .intro .title-small,
         .intro .invite-script,
+        .intro .angel,
         .intro .polaroid,
         .intro .hero-title,
         .intro .date-line,
@@ -1216,9 +1258,17 @@
     </div>
     <main class="wrap">
       <div class="page">
+        <div class="ribbon-band" aria-hidden="true">
+          <div class="ribbon-track">
+            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
+            <span>&nbsp;WE INVITE YOU&nbsp;&nbsp;&#183;&nbsp;&nbsp;SUNHONG &#9829; YUJUNG&nbsp;&nbsp;&#183;&nbsp;&nbsp;2027. 01. 09&nbsp;&nbsp;&#183;&nbsp;&nbsp;</span>
+          </div>
+        </div>
         <section class="intro">
           <div class="intro-hero">
             <h1 class="invite-script">We Invite You</h1>
+
+            <img class="angel" src="angel.png" width="770" height="330" alt="리본을 든 두 천사 일러스트">
 
             <div class="polaroid">
               <div class="photo-card">
