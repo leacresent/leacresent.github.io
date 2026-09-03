@@ -101,6 +101,13 @@
         overflow: hidden;
       }
 
+      /* 폰에서는 시트를 화면 끝까지 채운다. --card(430px) 상한을 그대로
+         두면 화면이 그보다 넓은 기기(예: 440px)에서 좌우에 종이색 띠가
+         남는다. 데스크톱에서는 카드형 레이아웃을 유지한다. */
+      @media (max-width: 600px) {
+        .wrap { width: 100%; }
+      }
+
       .lang-switch {
         position: fixed;
         top: 14px;
