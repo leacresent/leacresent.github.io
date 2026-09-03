@@ -101,6 +101,13 @@
         overflow: hidden;
       }
 
+      /* 폰에서는 시트를 화면 끝까지 채운다. --card(430px) 상한을 그대로
+         두면 화면이 그보다 넓은 기기(예: 440px)에서 좌우에 종이색 띠가
+         남는다. 데스크톱에서는 카드형 레이아웃을 유지한다. */
+      @media (max-width: 600px) {
+        .wrap { width: 100%; }
+      }
+
       .lang-switch {
         position: fixed;
         top: 14px;
@@ -1441,18 +1448,18 @@
           <div class="account-group" data-side="groom">
             <div class="account">
               <b data-i18n="acctGroomSelf">신랑 | 김선홍</b>
-              <span class="num"><small data-i18n="bankKakao">카카오뱅크</small>1234-5678</span>
-              <button class="copy" data-copy="12345678">COPY</button>
+              <span class="num"><small data-i18n="bankIBK">IBK 기업은행</small>074-092051-02-011</span>
+              <button class="copy" data-copy="07409205102011">COPY</button>
             </div>
             <div class="account">
               <b data-i18n="acctGroomFather">아버지 | 김연중</b>
-              <span class="num"><small data-i18n="bankWoori">우리은행</small>1234-5678</span>
-              <button class="copy" data-copy="12345678">COPY</button>
+              <span class="num"><small data-i18n="bankNonghyup">농협은행</small>003-02-195980</span>
+              <button class="copy" data-copy="00302195980">COPY</button>
             </div>
             <div class="account">
               <b data-i18n="acctGroomMother">어머니 | 서미경</b>
-              <span class="num"><small data-i18n="bankIBK">IBK 기업은행</small>1234-5678</span>
-              <button class="copy" data-copy="12345678">COPY</button>
+              <span class="num"><small data-i18n="bankShinhan">신한은행</small>110-218-164080</span>
+              <button class="copy" data-copy="110218164080">COPY</button>
             </div>
           </div>
           <div class="account-group" data-side="bride" hidden>
@@ -1592,6 +1599,7 @@
           bankIBK: "IBK 기업은행",
           bankKookmin: "국민은행",
           bankNonghyup: "농협은행",
+          bankShinhan: "신한은행",
           rsvpIntro: "기쁜 날, 함께해주시는 모든 분들을 귀하게 모실 수 있도록 참석 의사를 전달 부탁드립니다.",
           rsvpOpenBtn: "✉ 참석 여부 전달하기",
           shareKakao: "● Share KakaoTalk",
@@ -1670,6 +1678,7 @@
           bankIBK: "IBK企業銀行",
           bankKookmin: "国民銀行",
           bankNonghyup: "農協銀行",
+          bankShinhan: "新韓銀行",
           rsvpIntro: "喜びの日を共に過ごしてくださる皆様を大切にお迎えできるよう、出欠のご連絡をお願いいたします。",
           rsvpOpenBtn: "✉ 出欠のご連絡",
           shareKakao: "● カカオトークで共有",
