@@ -779,6 +779,7 @@
       .section-banner {
         margin: -38px calc(-1 * (var(--frame) + var(--pad))) 38px;
         overflow: hidden;
+        cursor: zoom-in;
       }
 
       .section-banner img {
@@ -1835,9 +1836,12 @@
       const lightbox = document.getElementById("lightbox");
       if (lightbox) {
         // 엽서 사진이 항상 첫 장. 예식일시 사진은 계속 제외한다.
+        // 페이지에 나오는 순서대로: 엽서 → 오시는 길 배너 → 갤러리
         const heroPhoto = document.querySelector(".pc-photo img");
+        const bannerPhoto = document.querySelector(".section-banner img");
         const photos = [
           ...(heroPhoto ? [heroPhoto] : []),
+          ...(bannerPhoto ? [bannerPhoto] : []),
           ...document.querySelectorAll("#gcTrack img"),
         ];
         const lbImg = document.getElementById("lightboxImg");
