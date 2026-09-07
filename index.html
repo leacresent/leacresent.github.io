@@ -774,6 +774,23 @@
         background: #5d554d;
       }
 
+      /* 섹션 제목 위에 오는 전면 사진 띠. 섹션의 좌우/위 패딩을
+         상쇄해 화면 끝까지 채운다. */
+      .section-banner {
+        margin: -38px calc(-1 * (var(--frame) + var(--pad))) 38px;
+        overflow: hidden;
+        cursor: zoom-in;
+      }
+
+      .section-banner img {
+        display: block;
+        width: 100%;
+        /* 4:5. 원본 2:3 에서 위아래를 8% 씩만 덜어낸다. 1/1 은 33% 를
+           잘라 인물이 답답해지고, 2:3 은 배너가 너무 길어진다. */
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+      }
+
       .date-photo {
         width: min(300px, 100%);
         height: 196px;
@@ -1371,6 +1388,10 @@
         </section>
 
         <section class="reveal">
+          <div class="section-banner">
+            <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20010.jpeg" alt="신랑 신부" data-i18n-alt="altCouple" loading="lazy" decoding="async">
+          </div>
+
           <p class="eyebrow">LOCATION</p>
             <h2 class="section-title-ko" data-i18n="titleLocation">오시는 길</h2>
           <p class="venue-name" data-i18n="venueName">소노펠리체 다이아몬드홀</p>
@@ -1412,11 +1433,10 @@
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20015.jpeg" alt="wedding photo 8" loading="lazy" decoding="async">
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20018.jpeg" alt="wedding photo 9" loading="lazy" decoding="async">
                 <img src="images/DSC07119.jpg" alt="wedding photo 10" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20010.jpeg" alt="wedding photo 11" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20007.jpeg" alt="wedding photo 12" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-09-02-13-44-35.jpeg" alt="wedding photo 13" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 14" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 15" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20007.jpeg" alt="wedding photo 11" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-09-02-13-44-35.jpeg" alt="wedding photo 12" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 13" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 14" loading="lazy" decoding="async">
             </div>
               <button type="button" class="gc-nav prev" id="gcPrev" aria-label="이전" data-i18n-aria-label="ariaPrev">&#8249;</button>
               <button type="button" class="gc-nav next" id="gcNext" aria-label="다음" data-i18n-aria-label="ariaNext">&#8250;</button>
@@ -1816,9 +1836,12 @@
       const lightbox = document.getElementById("lightbox");
       if (lightbox) {
         // 엽서 사진이 항상 첫 장. 예식일시 사진은 계속 제외한다.
+        // 페이지에 나오는 순서대로: 엽서 → 오시는 길 배너 → 갤러리
         const heroPhoto = document.querySelector(".pc-photo img");
+        const bannerPhoto = document.querySelector(".section-banner img");
         const photos = [
           ...(heroPhoto ? [heroPhoto] : []),
+          ...(bannerPhoto ? [bannerPhoto] : []),
           ...document.querySelectorAll("#gcTrack img"),
         ];
         const lbImg = document.getElementById("lightboxImg");
