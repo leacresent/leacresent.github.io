@@ -774,6 +774,22 @@
         background: #5d554d;
       }
 
+      /* 섹션 제목 위에 오는 전면 사진 띠. 섹션의 좌우/위 패딩을
+         상쇄해 화면 끝까지 채운다. */
+      .section-banner {
+        margin: -38px calc(-1 * (var(--frame) + var(--pad))) 38px;
+        overflow: hidden;
+      }
+
+      .section-banner img {
+        display: block;
+        width: 100%;
+        /* 원본이 2:3 이라 프레임도 2:3. 1/1 로 두면 cover 가 위아래를
+           33% 잘라낸다. */
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+      }
+
       .date-photo {
         width: min(300px, 100%);
         height: 196px;
@@ -1371,6 +1387,10 @@
         </section>
 
         <section class="reveal">
+          <div class="section-banner">
+            <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20010.jpeg" alt="신랑 신부" data-i18n-alt="altCouple" loading="lazy" decoding="async">
+          </div>
+
           <p class="eyebrow">LOCATION</p>
             <h2 class="section-title-ko" data-i18n="titleLocation">오시는 길</h2>
           <p class="venue-name" data-i18n="venueName">소노펠리체 다이아몬드홀</p>
@@ -1412,11 +1432,10 @@
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20015.jpeg" alt="wedding photo 8" loading="lazy" decoding="async">
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20018.jpeg" alt="wedding photo 9" loading="lazy" decoding="async">
                 <img src="images/DSC07119.jpg" alt="wedding photo 10" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20010.jpeg" alt="wedding photo 11" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20007.jpeg" alt="wedding photo 12" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-09-02-13-44-35.jpeg" alt="wedding photo 13" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 14" loading="lazy" decoding="async">
-                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 15" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20007.jpeg" alt="wedding photo 11" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-09-02-13-44-35.jpeg" alt="wedding photo 12" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 13" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 14" loading="lazy" decoding="async">
             </div>
               <button type="button" class="gc-nav prev" id="gcPrev" aria-label="이전" data-i18n-aria-label="ariaPrev">&#8249;</button>
               <button type="button" class="gc-nav next" id="gcNext" aria-label="다음" data-i18n-aria-label="ariaNext">&#8250;</button>
