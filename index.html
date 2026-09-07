@@ -784,9 +784,9 @@
       .section-banner img {
         display: block;
         width: 100%;
-        /* 원본이 2:3 이라 프레임도 2:3. 1/1 로 두면 cover 가 위아래를
-           33% 잘라낸다. */
-        aspect-ratio: 2 / 3;
+        /* 4:5. 원본 2:3 에서 위아래를 8% 씩만 덜어낸다. 1/1 은 33% 를
+           잘라 인물이 답답해지고, 2:3 은 배너가 너무 길어진다. */
+        aspect-ratio: 4 / 5;
         object-fit: cover;
       }
 
