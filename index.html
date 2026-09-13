@@ -1436,6 +1436,8 @@
                 <img src="images/KakaoTalk_Photo_2026-09-02-13-44-35.jpeg" alt="wedding photo 12" loading="lazy" decoding="async">
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20006.jpeg" alt="wedding photo 13" loading="lazy" decoding="async">
                 <img src="images/KakaoTalk_Photo_2026-08-05-12-32-55%20004.jpeg" alt="wedding photo 14" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-31-07%20009.jpeg" alt="wedding photo 15" loading="lazy" decoding="async">
+                <img src="images/KakaoTalk_Photo_2026-08-05-12-31-08%20011.jpeg" alt="wedding photo 16" loading="lazy" decoding="async">
             </div>
               <button type="button" class="gc-nav prev" id="gcPrev" aria-label="이전" data-i18n-aria-label="ariaPrev">&#8249;</button>
               <button type="button" class="gc-nav next" id="gcNext" aria-label="다음" data-i18n-aria-label="ariaNext">&#8250;</button>
@@ -1497,6 +1499,12 @@
               <span class="num"><small data-i18n="bankNonghyup">농협은행</small>352-0957-6707-93</span>
               <button class="copy" data-copy="3520957670793">COPY</button>
             </div>
+          </div>
+        </section>
+
+        <section class="reveal">
+          <div class="section-banner">
+            <img src="images/KakaoTalk_Photo_2026-09-13-09-49-27.jpeg" alt="신랑 신부" data-i18n-alt="altCouple" loading="lazy" decoding="async">
           </div>
         </section>
 
@@ -1835,12 +1843,12 @@
       const lightbox = document.getElementById("lightbox");
       if (lightbox) {
         // 엽서 사진이 항상 첫 장. 예식일시 사진은 계속 제외한다.
-        // 페이지에 나오는 순서대로: 엽서 → 오시는 길 배너 → 갤러리
+        // 페이지에 나오는 순서대로: 엽서 → 배너 사진들(오시는 길, 마음 전하실 곳) → 갤러리
         const heroPhoto = document.querySelector(".pc-photo img");
-        const bannerPhoto = document.querySelector(".section-banner img");
+        const bannerPhotos = document.querySelectorAll(".section-banner img");
         const photos = [
           ...(heroPhoto ? [heroPhoto] : []),
-          ...(bannerPhoto ? [bannerPhoto] : []),
+          ...bannerPhotos,
           ...document.querySelectorAll("#gcTrack img"),
         ];
         const lbImg = document.getElementById("lightboxImg");
