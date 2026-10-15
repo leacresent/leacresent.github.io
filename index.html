@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
     <title>With Love Benediction</title>
     <meta name="description" content="선홍 ♥ 유정 결혼합니다">
     <meta property="og:type" content="website">
@@ -770,8 +771,12 @@
       /* --brown 은 본문 글자색 등 6군데가 더 쓰므로 변수를 바꾸지 않고
          이 섹션 배경만 지정한다. */
       .dark {
-        color: #f8f4ed;
-        background: #5d554d;
+        color: var(--ink);
+        background-color: var(--paper);
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+          repeating-linear-gradient(100deg, rgba(90, 74, 58, 0.02) 0 1px, transparent 1px 7px);
+        background-size: 150px 150px, auto;
       }
 
       /* 섹션 제목 위에 오는 전면 사진 띠. 섹션의 좌우/위 패딩을
@@ -804,7 +809,7 @@
         font-weight: 700;
         font-size: 58px;
         line-height: 1;
-        color: var(--cream);
+        color: var(--brown);
       }
 
       .calendar {
@@ -823,13 +828,13 @@
       }
 
       .calendar .dow {
-        color: #b7a99a;
+        color: var(--muted);
         font-size: 13px;
         min-height: 18px;
       }
 
       .calendar .day {
-        border: 1px solid #fff8ef;
+        border: 1px solid var(--brown);
         border-radius: 50%;
       }
 
@@ -851,11 +856,11 @@
       }
 
       .dark .eyebrow {
-        color: #b7a99a;
+        color: var(--muted);
       }
 
       .dark .section-title-ko {
-        color: #f8f4ed;
+        color: var(--ink);
       }
 
       /* ---------- information / location ---------- */
@@ -1033,6 +1038,15 @@
         margin: 18px auto;
         text-align: left;
         font-size: 15px;
+      }
+
+      .account .num a,
+      .account .num a[href^="tel"],
+      .account a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font: inherit !important;
+        pointer-events: none;
       }
 
       .account b {
@@ -1658,7 +1672,7 @@
           alertSendFailed: "전달에 실패했습니다. 잠시 후 다시 시도해주세요.",
         },
         ja: {
-          greeting: "互いを理解し、支え合いながら<br>共に歩んでいくことを誓いました。<br>ぜひ私たちの門出を見守り、<br>祝福していただけましたら幸いです。",
+          greeting: "お互いの世界を理解し、受け止め合いながら<br>生涯を共に歩むことを決めました。<br>喜びの席にお越しいただき、祝福してくださいませ。",
           altCouple: "新郎新婦",
           altRingCheck: "指輪を確認する新郎新婦",
           parentsGroom: "キム・ヨンジュン、ソ・ミギョンの息子 <b>キム・ソンホン</b>",
