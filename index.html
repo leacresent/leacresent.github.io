@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
     <title>With Love Benediction</title>
     <meta name="description" content="선홍 ♥ 유정 결혼합니다">
     <meta property="og:type" content="website">
@@ -1035,6 +1036,15 @@
         font-size: 15px;
       }
 
+      .account .num a,
+      .account .num a[href^="tel"],
+      .account a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font: inherit !important;
+        pointer-events: none;
+      }
+
       .account b {
         font-size: 15.5px;
         white-space: nowrap;
@@ -1579,7 +1589,7 @@
       // ---------- i18n (KO / JA) ----------
       const translations = {
         ko: {
-          greeting: "서로의 세상을 이해하고 품으며<br>평생을 함께하기로 했습니다.<br>기쁜 자리에 함께하시어 축복해 주세요.",
+          greeting: "각자의 이야기로 살아온 우리가<br>이제 서로의 다음 문장이 되려 합니다.",
           altCouple: "신랑 신부",
           altRingCheck: "반지를 확인하는 신랑 신부",
           parentsGroom: "김연중 · 서미경의 아들 <b>김선홍</b>",
@@ -1658,7 +1668,7 @@
           alertSendFailed: "전달에 실패했습니다. 잠시 후 다시 시도해주세요.",
         },
         ja: {
-          greeting: "互いを理解し、支え合いながら<br>共に歩んでいくことを誓いました。<br>ぜひ私たちの門出を見守り、<br>祝福していただけましたら幸いです。",
+          greeting: "それぞれの物語を歩んできた私たちが<br>これから、互いの次の一文になろうとしています。",
           altCouple: "新郎新婦",
           altRingCheck: "指輪を確認する新郎新婦",
           parentsGroom: "キム・ヨンジュン、ソ・ミギョンの息子 <b>キム・ソンホン</b>",
