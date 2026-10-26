@@ -771,12 +771,8 @@
       /* --brown 은 본문 글자색 등 6군데가 더 쓰므로 변수를 바꾸지 않고
          이 섹션 배경만 지정한다. */
       .dark {
-        color: var(--ink);
-        background-color: var(--paper);
-        background-image:
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
-          repeating-linear-gradient(100deg, rgba(90, 74, 58, 0.02) 0 1px, transparent 1px 7px);
-        background-size: 150px 150px, auto;
+        color: #f8f4ed;
+        background: #5d554d;
       }
 
       /* 섹션 제목 위에 오는 전면 사진 띠. 섹션의 좌우/위 패딩을
@@ -809,7 +805,7 @@
         font-weight: 700;
         font-size: 58px;
         line-height: 1;
-        color: var(--brown);
+        color: var(--cream);
       }
 
       .calendar {
@@ -828,13 +824,13 @@
       }
 
       .calendar .dow {
-        color: var(--muted);
+        color: #b7a99a;
         font-size: 13px;
         min-height: 18px;
       }
 
       .calendar .day {
-        border: 1px solid var(--brown);
+        border: 1px solid #fff8ef;
         border-radius: 50%;
       }
 
@@ -856,11 +852,11 @@
       }
 
       .dark .eyebrow {
-        color: var(--muted);
+        color: #b7a99a;
       }
 
       .dark .section-title-ko {
-        color: var(--ink);
+        color: #f8f4ed;
       }
 
       /* ---------- information / location ---------- */
