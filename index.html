@@ -171,6 +171,12 @@
         100% { transform: translateY(0); }
       }
 
+      /* 버튼을 연달아 눌러 사진을 넘길 때 모바일 브라우저가 더블탭으로 보고
+         화면을 확대하는 것을 막는다. 핀치 확대는 그대로 가능. */
+      html, body, button, .gc-frame, .lightbox {
+        touch-action: manipulation;
+      }
+
       section {
         position: relative;
         padding: 38px calc(var(--frame) + var(--pad)) 40px;
@@ -1748,7 +1754,8 @@
         },
       };
 
-      let currentLang = localStorage.getItem("weddingLang") || "ko";
+      // 첫 화면은 항상 한국어. 일본어는 JA 탭을 눌렀을 때만 (선택을 저장하지 않는다).
+      let currentLang = "ko";
 
       function t(key) {
         const dict = translations[currentLang] || translations.ko;
@@ -1779,7 +1786,6 @@
 
       function setLang(lang) {
         currentLang = lang;
-        localStorage.setItem("weddingLang", lang);
         applyTranslations();
       }
 
